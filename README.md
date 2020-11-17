@@ -17,7 +17,7 @@ Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom
 
 - 4. tabela: BDP ppp- države, BDP ppp, leta
 
-- 5. in 6. tabela: Količinski uvoz in izvoz držav - države, izvoz, uvoz, saldo, leta
+- 5. in vi. tabela: Količinski uvoz in izvoz držav - države, izvoz, uvoz, saldo, leta
 
 - 7. tabela: Tabela držav in njihovih značilnosti- države, populacija, površina države 
 
