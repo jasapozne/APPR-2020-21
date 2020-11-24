@@ -7,7 +7,10 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 
 ## Analiza uvoza in izvoza v Sloveniji
 
-Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom poskušal ugotoviti iz katerih držav največ uvozimo in izvozimo, katere so te dobrine ter kako se je to skozi leta spreminjalo. Dodatno me bo še zanimalo, kakšen je vpliv uvoza in izvoza na BDP ter kakšen je ta doprinos v premerjavi z ostalimi državami EU. Na zadnje bom Slovenijo uvrstil v podskupino z državami, ki bodo imele približno enak saldo menjave dobrin, ter potem analiziral kako se Slovenija primerja z ostalimi svetovnimi državami iz te podskupine po BDP ppp.Probal bom ugotoviti ali Slovenija sploh ima strateško partnerico, na koncu pa bom še pogledal kako se Slovenija primerja z ostalimi državami pa izvozu in uvozu, ki imajo približno enako število prebivalcev ter površino.
+Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom poskušal ugotoviti iz katerih držav največ uvozimo in izvozimo, katere so te dobrine ter kako se je to skozi leta spreminjalo. Dodatno me bo še zanimalo, kakšen je vpliv uvoza in izvoza na BDP v premerjavi z ostalimi državami EU skozi obdobje. Tukaj imam predvsem razporediti države v skupine ter jih potem primarjati. Namen še imam iz danih podatkov izračunati povprečen saldo menjave  ter potem 
+države ponovno razporediti v skupine,  pogledati kako se Slovenija primerja z ostalimi državami. Skupino v kateri je Slovenija pa bi potem še primerjal po BDP ppp ter s tem skušal ugotoviti ali je saldo menjave pokazatelj razvitosti. Na zadnje bom države, ki imajo približno enako število prebivalcev kot Slovenija, ter države ki imajo približno enako velikost površine, ločil v dve skupini ter pogledal kako se Slovenija primerja z njimi skozi leta.
+
+
 
 - 1. tabela: Uvoza in izvoz blaga po SMTK (letno) - države, blago (izvoz/uvoz), leta 
 
