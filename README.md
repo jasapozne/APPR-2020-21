@@ -11,13 +11,15 @@ Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom
 
 - 1. tabela: Uvoza in izvoz blaga po SMTK (letno) - države, blago (izvoz/uvoz), leta 
 
-- 2. tabela: Izdatkovna struktura BDP (letno) - saldo menjave, leta 
+- 2. tabela: Doprinos izvoza k BDP v EU - doprinos izvoza, leta, države
 
-- 3. tabela: Doprinos uvoza iz izvoza k BDP v EU - doprinos uvoza in izvoza, leta, države
+- 3. tabela: Doprinos uvoza k BDP v EU - doprinos uvoza, leta, države 
 
-- 4. tabela: BDP ppp- države, BDP ppp, leta
+- 4. tabela: BDP po kupni moči- države, BDP ppp, leta
 
-- 5. in vi. tabela: Količinski uvoz in izvoz držav - države, izvoz, uvoz, saldo, leta
+- 5. tabela: Količinski izvoz držav - države, izvoz, saldo menjave, leta
+
+- 6. tabela: Količinski izvoz držav - države, izvoz, leta
 
 - 7. tabela: Tabela držav in njihovih značilnosti- države, populacija, površina države 
 
