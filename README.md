@@ -5,7 +5,7 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 * [![Shiny](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/jasapozne/APPR-2020-21/master?urlpath=shiny/APPR-2020-21/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/jasapozne/APPR-2020-21/master?urlpath=rstudio) RStudio
 
-## Analiza uvoza in izvoza v Sloveniji
+## Analiza uvoza in izvoza blaga v Sloveniji
 
 Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom poskušal ugotoviti iz katerih držav največ uvozimo in izvozimo, katere so te dobrine ter kako se je to skozi leta spreminjalo. Dodatno me bo še zanimalo, kakšen je vpliv uvoza in izvoza na BDP v premerjavi z ostalimi državami EU skozi obdobje. Tukaj imam predvsem razporediti države v skupine ter jih potem primarjati. Namen še imam iz danih podatkov izračunati povprečen saldo menjave  ter potem 
 države ponovno razporediti v skupine,  pogledati kako se Slovenija primerja z ostalimi državami. Skupino v kateri je Slovenija pa bi potem še primerjal po BDP ppp ter s tem skušal ugotoviti ali je saldo menjave pokazatelj razvitosti. Na zadnje bom države, ki imajo približno enako število prebivalcev kot Slovenija, ter države ki imajo približno enako velikost površine, ločil v dve skupini ter pogledal kako se Slovenija primerja z njimi skozi leta.
