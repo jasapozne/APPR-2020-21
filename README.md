@@ -28,7 +28,9 @@ Podatkovni viri:
 Za projekt bom uporabil podatke iz:
 - SURS:https://pxweb.stat.si/SiStat/sl/Podrocja/Index/141/trgovina-in-storitve v CSS
 
-- EUROSTAT:https://ec.europa.eu/eurostat/search?p_auth=QM2IBzz7&p_p_id=estatsearchportlet_WAR_estatsearchportlet&p_p_lifecycle=1&p_p_state=maximized&p_p_mode=view&_estatsearchportlet_WAR_estatsearchportlet_theme=empty&_estatsearchportlet_WAR_estatsearchportlet_action=search&_estatsearchportlet_WAR_estatsearchportlet_collection=empty&text=imports+and+exports v CSS
+- EUROSTAT:https://ec.europa.eu/eurostat/databrowser/view/tet00004/default/table?lang=en;
+https://ec.europa.eu/eurostat/databrowser/view/tet00003/default/table?lang=en V CSS
+
 
 - Wikipedia: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita v XML
 
