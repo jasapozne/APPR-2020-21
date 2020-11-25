@@ -12,19 +12,17 @@ države ponovno razporediti v skupine,  pogledati kako se Slovenija primerja z o
 
 
 
-- 1. tabela: Uvoza in izvoz blaga po SMTK (letno) - države, blago (izvoz/uvoz), leta 
+- 1. tabela: Izvoz in uvoz blaga po državah (letno) - države, blago (uvoz in izvoz), leta, skupine držav
 
-- 2. tabela: Doprinos izvoza k BDP v EU - doprinos izvoza, leta, države
+- 2. tabela: Doprinos izvoza in uvoza k BDP v Evropi - doprinos izvoza, doprinos uvoza leta, države, skupine držav, nad/pod EU povprečjem
 
-- 3. tabela: Doprinos uvoza k BDP v EU - doprinos uvoza, leta, države 
+- 3. tabela: Primerjava količinskega izvoza in uvoza držav - države, izvoz, uvoz, saldo menjave s tujino, leta, skupine držav glede na saldo menjave, uvoz in izvoz
 
-- 4. tabela: BDP po kupni moči- države, BDP ppp, leta
+- 4. tabela: Natančnejša primerjava držav s približno enakim saldom menjave- države, BDP ppp, leta, saldo menjave s tujino
 
-- 5. tabela: Količinski izvoz držav - države, izvoz, saldo menjave, leta
+- 5. tabela: Primerjava U&I po prebivalcih - države, izvoz, uvoz, leta, populacija države
 
-- 6. tabela: Količinski izvoz držav - države, izvoz, leta
-
-- 7. tabela: Tabela držav in njihovih značilnosti- države, populacija, površina države 
+- 6. tabela: Primerjava U&I po površini- države, izvoz, uvoz, površina države, leta 
 
 Podatkovni viri:
 Za projekt bom uporabil podatke iz:
@@ -34,7 +32,7 @@ Za projekt bom uporabil podatke iz:
 
 - Wikipedia: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita v XML
 
-- IMF: https://data.imf.org/regular.aspx?key=61013712 v XML
+- IMF: https://data.imf.org/regular.aspx?key=61013712 v CSS
 
 - worldometer:https://www.worldometers.info/world-population/population-by-country/ v XML
 ## Program
