@@ -1,5 +1,18 @@
 # 2. faza: Uvoz podatkov
 
+#################################
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(httr)
+require(rvest)
+require(XML)
+
+####################################
+
+
+
 sl <- locale("sl", decimal_mark=",", grouping_mark=".")
 
 # Funkcija, ki uvozi občine iz Wikipedije
@@ -53,3 +66,24 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 # datoteko, tukaj pa bi klicali tiste, ki jih potrebujemo v
 # 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
 # fazah.
+
+
+uvoz <-read_csv("podatki/Uvoz.csv",
+              locale=locale(encoding="Windows-1250"))
+
+
+izvoz <-read_csv("podatki/Izvoz.csv",
+                locale=locale(encoding="Windows-1250"))
+
+UI.SLO <-read_csv("podatki/U&IpoSMTK.csv",
+                 locale=locale(encoding="Windows-1250"))
+
+delez.uvoza.pri.BDP <-read_csv("podatki/U_BDP_EU.csv",
+                  locale=locale(encoding="Windows-1250"))
+
+delez.izvoza.pri.BDP <-read_csv("podatki/I_BDP_EU.csv",
+                  locale=locale(encoding="Windows-1250"))
+
+url <- "https://www.worldometers.info/world-population/population-by-country/"
+podatki.drzav <- read_html(url)
+
