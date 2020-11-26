@@ -12,17 +12,13 @@ države ponovno razporediti v skupine,  pogledati kako se Slovenija primerja z o
 
 
 
-- 1. tabela: Izvoz in uvoz blaga po državah (letno) - države, blago (uvoz in izvoz), leta, skupine držav
+- 1. tabela: Izvoz in uvoz blaga po državah (letno) - države, blago (uvoz in izvoz), leta
 
-- 2. tabela: Doprinos izvoza in uvoza k BDP v Evropi - doprinos izvoza, doprinos uvoza leta, države, skupine držav, nad/pod EU povprečjem
+- 2. tabela: Doprinos izvoza in uvoza k BDP v Evropi - doprinos izvoza, doprinos uvoza leta, evropske države
 
-- 3. tabela: Primerjava količinskega izvoza in uvoza držav - države, izvoz, uvoz, saldo menjave s tujino, leta, skupine držav glede na saldo menjave, uvoz in izvoz
+- 3. tabela: Primerjava količinskega izvoza in uvoza držav - države, izvoz, uvoz, leta
 
-- 4. tabela: Natančnejša primerjava držav s približno enakim saldom menjave- države, BDP ppp, leta, saldo menjave s tujino
-
-- 5. tabela: Primerjava U&I po prebivalcih - države, izvoz, uvoz, leta, populacija države
-
-- 6. tabela: Primerjava U&I po površini- države, izvoz, uvoz, površina države, leta 
+- 4. tabela: Podatkih o državah- države, prebivalci, površina države
 
 Podatkovni viri:
 Za projekt bom uporabil podatke iz:
