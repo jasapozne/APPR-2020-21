@@ -8,6 +8,7 @@ library(tidyr)
 library(httr)
 require(rvest)
 require(XML)
+require(stringr)
 
 ####################################
 
@@ -69,21 +70,41 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 
 
 uvoz <-read_csv("podatki/Uvoz.csv",
-              locale=locale(encoding="Windows-1250"))
+              locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
+  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
+  mutate(leto=parse_number(leto)) %>% rename(drzava=X2)  
+
+uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
+  str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
+  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
+
 
 
 izvoz <-read_csv("podatki/Izvoz.csv",
-                locale=locale(encoding="Windows-1250"))
+                locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>%
+  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
+  mutate(leto=parse_number(leto)) %>% rename(drzava=X2) 
 
-UI.SLO <-read_csv("podatki/U&IpoSMTK.csv",
-                 locale=locale(encoding="Windows-1250"))
+izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
+  str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
+  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
+ 
+str_remove(". of") %>% str_remove(", Rep. of")
 
-delez.uvoza.pri.BDP <-read_csv("podatki/U_BDP_EU.csv",
-                  locale=locale(encoding="Windows-1250"))
+UI.SLO <-read_csv("podatki/UISMTK.csv",
+                 locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
+                  names_to="leto",values_to="kolicina (€)",values_drop_na=TRUE) %>%
+                  mutate(leto=parse_number(leto)) %>% rename(SMTK=3) 
 
-delez.izvoza.pri.BDP <-read_csv("podatki/I_BDP_EU.csv",
-                  locale=locale(encoding="Windows-1250"))
+IU.SLO <- UI.SLO$DRŽAVA %>%  rename(drzava=1) %>% str_replace("[A-Z]* ","") 
+
+
+
+
+
+
 
 url <- "https://www.worldometers.info/world-population/population-by-country/"
 podatki.drzav <- read_html(url)
+
 
