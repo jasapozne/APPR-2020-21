@@ -68,7 +68,7 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 # 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
 # fazah.
 
-
+#1. tabela
 uvoz <-read_csv("podatki/Uvoz.csv",
               locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
   pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
@@ -79,7 +79,7 @@ uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
 
 
-
+#2.tabela
 izvoz <-read_csv("podatki/Izvoz.csv",
                 locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>%
   pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
@@ -89,9 +89,9 @@ izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
  
+#3. tabela
 
-
-UI.SLO <-read_csv("podatki/UISMTK.csv",
+UI.SLO <-read_csv("podatki/SMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
                   names_to="leto",values_to="kolicina (€)",values_drop_na=TRUE) %>%
                   mutate(leto=parse_number(leto)) %>% rename(SMTK=3) 
@@ -100,10 +100,7 @@ IU.SLO <- UI.SLO$DRŽAVA %>%  rename(drzava=1) %>% str_replace("[A-Z]* ","")
 
 
 
-
-
-
-
+#4. tabela
 url <- "https://www.worldometers.info/world-population/population-by-country/"
 podatki.drzav <- read_html(url)
 
