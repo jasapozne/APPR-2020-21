@@ -28,6 +28,7 @@ Za projekt bom uporabil podatke iz:
 - IMF: https://data.imf.org/regular.aspx?key=61013712 v CSS
 
 - worldometer:https://www.worldometers.info/world-population/population-by-country/ v XML
+
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`.
