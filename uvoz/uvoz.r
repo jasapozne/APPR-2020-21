@@ -89,7 +89,7 @@ izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
  
-str_remove(". of") %>% str_remove(", Rep. of")
+
 
 UI.SLO <-read_csv("podatki/UISMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
