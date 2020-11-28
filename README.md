@@ -7,28 +7,23 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 
 ## Analiza uvoza in izvoza blaga v Sloveniji
 
-Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom poskušal ugotoviti iz katerih držav največ uvozimo in izvozimo, katere so te dobrine ter kako se je to skozi leta spreminjalo. Dodatno me bo še zanimalo, kakšen je vpliv uvoza in izvoza na BDP v premerjavi z ostalimi državami EU skozi obdobje. Tukaj imam predvsem razporediti države v skupine ter jih potem primarjati. Namen še imam iz danih podatkov izračunati povprečen saldo menjave  ter potem 
-države ponovno razporediti v skupine,  pogledati kako se Slovenija primerja z ostalimi državami. Skupino v kateri je Slovenija pa bi potem še primerjal po BDP ppp ter s tem skušal ugotoviti ali je saldo menjave pokazatelj razvitosti. Na zadnje bom države, ki imajo približno enako število prebivalcev kot Slovenija, ter države ki imajo približno enako velikost površine, ločil v dve skupini ter pogledal kako se Slovenija primerja z njimi skozi leta.
+Z analizo slovenskega uvoza in izvoza skozi časovno obdobje razpona 10 let, bom poskušal ugotoviti iz katerih držav največ uvozimo in izvozimo, katere so te dobrine s katerimi trgujemo največ oz. najmanj ter kako se je to skozi leta spreminjalo. 
+Zanimalo me bo še kako se Slovenija primerja z ostalimi državami po uvozu,izvozu ter po saldu menjave s tujino skozi obdobje 10 let. Tako bom ugotavljal ali se je Sloveniji izboljšal uvoz/izvoz in kako se lahko le-ta primerja z ostalimi državami. Globjo analizo uvoza/izvoza mislim narediti še z državami, ki imajo približno enako število prebivalcev oz. približno enako veliko površino kot Slovenija. 
 
 
 
-- 1. tabela: Izvoz in uvoz blaga po državah (letno) - države, blago (uvoz in izvoz), leta
 
-- 2. tabela: Doprinos izvoza in uvoza k BDP v Evropi - doprinos izvoza, doprinos uvoza leta, evropske države
+- 1. tabela: Izvoz in uvoz blaga po državah (letno) - države, blago (uvoz in izvoz), leta, količina
 
-- 3. tabela: Primerjava količinskega izvoza in uvoza držav - države, izvoz, uvoz, leta
+- 2. tabela: Uvoz držav  - države, leta, količina uvoza
+
+- 3. tabela: Izvoz držav - države, količina izvoza, leta
 
 - 4. tabela: Podatkih o državah- države, prebivalci, površina države
 
 Podatkovni viri:
 Za projekt bom uporabil podatke iz:
 - SURS:https://pxweb.stat.si/SiStat/sl/Podrocja/Index/141/trgovina-in-storitve v CSS
-
-- EUROSTAT:https://ec.europa.eu/eurostat/databrowser/view/tet00004/default/table?lang=en;
-https://ec.europa.eu/eurostat/databrowser/view/tet00003/default/table?lang=en V CSS
-
-
-- Wikipedia: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita v XML
 
 - IMF: https://data.imf.org/regular.aspx?key=61013712 v CSS
 
