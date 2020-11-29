@@ -75,7 +75,7 @@ uvoz <-read_csv("podatki/Uvoz.csv",
   mutate(leto=parse_number(leto)) %>% rename(drzava=X2)  
 
 uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
-  str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
+  str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe Dem\\.", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
 
 uvoz[["drzava"]] <- uvoz.1
