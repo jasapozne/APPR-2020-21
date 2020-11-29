@@ -78,6 +78,7 @@ uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
 
+uvoz[["drzava"]] <- uvoz.1
 
 #2.tabela
 izvoz <-read_csv("podatki/Izvoz.csv",
@@ -86,9 +87,12 @@ izvoz <-read_csv("podatki/Izvoz.csv",
   mutate(leto=parse_number(leto)) %>% rename(drzava=X2) 
 
 izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
-  str_replace("SĂŁo TomĂ© and PrĂ­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
-  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
- 
+  str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
+  str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The")
+
+izvoz[["drzava"]] <- izvoz.1
+
+
 #3. tabela
 
 UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
@@ -96,7 +100,8 @@ UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                   names_to="leto",values_to="kolicina (€)",values_drop_na=TRUE) %>%
                   mutate(leto=parse_number(leto)) %>% rename(SMTK=3) 
 
-IU.SLO <- UI.SLO$DRŽAVA %>%  rename(drzava=1) %>% str_replace("[A-Z]* ","") 
+IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") 
+UI.SLO[["DRŽAVA"]] <- IU.SLO
 
 
 
@@ -105,5 +110,9 @@ url <- "https://www.worldometers.info/world-population/population-by-country/"
 naslov <- read_html(url)
 podatki.drzav <- naslov %>% html_nodes(xpath="//table[@id='example2']") %>% 
   .[[1]] %>% html_table(dec=".") %>% select(2,3,7) %>% rename(Country=1,Population=2)
+
+
+  
+  
 
 
