@@ -91,7 +91,7 @@ izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
  
 #3. tabela
 
-UI.SLO <-read_csv("podatki/SMTK.csv",
+UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
                   names_to="leto",values_to="kolicina (€)",values_drop_na=TRUE) %>%
                   mutate(leto=parse_number(leto)) %>% rename(SMTK=3) 
@@ -102,6 +102,8 @@ IU.SLO <- UI.SLO$DRŽAVA %>%  rename(drzava=1) %>% str_replace("[A-Z]* ","")
 
 #4. tabela
 url <- "https://www.worldometers.info/world-population/population-by-country/"
-podatki.drzav <- read_html(url)
+naslov <- read_html(url)
+podatki.drzav <- naslov %>% html_nodes(xpath="//table[@id='example2']") %>% 
+  .[[1]] %>% html_table(dec=".") %>% select(2,3,7) %>% rename(Country=1,Population=2)
 
 
