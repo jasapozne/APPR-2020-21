@@ -83,7 +83,7 @@ uvoz[["drzava"]] <- uvoz.1
 #2.tabela
 izvoz <-read_csv("podatki/Izvoz.csv",
                 locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>%
-  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
+  pivot_longer(c(-1), names_to="LETO",values_to="KOLICINA (MIO $)",values_drop_na=TRUE) %>%
   mutate(leto=parse_number(leto)) %>% rename(drzava=X2) 
 
 izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
@@ -112,8 +112,10 @@ podatki.drzav <- naslov %>% html_nodes(xpath="//table[@id='example2']") %>%
   .[[1]] %>% html_table(dec=".") %>% select(2,3,7) %>% rename(Country=1,Population=2)
 
 povrsina.bv <- podatki.drzav$Population %>% str_replace("^[,]*$","")
-populacija.bv <- podatki.drzav$Population %>% str_replace("^[,]*$","")  
+populacija.bv <- podatki.drzav$`Land Area (Km²)` %>% str_replace("^[,]*$","")  
 
 podatki.drzav[["Population"]] <- populacija.bv
 podatki.drzav[[3]] <- povrsina.bv
 
+podatki.drzav$Population <- as.numeric(as.character(podatki.drzav$Population))
+podatki.drzav$`Land Area (Km²)` <- as.numeric(as.character(podatki.drzav$`Land Area (Km²)`))
