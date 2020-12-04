@@ -44,22 +44,22 @@ Uvozil sem podatke o uvoza/izvozu v obliki CSV s statističnega urada, IMF splet
 z Worldometer. Viri so natančneje navedeni v "README.md", kjer so tudi povezave do podatkov. Podatki so prikazani v štirih razpredelnicah v obliki *tidy data*.
 
 
-1. `uvoz` - podatki o uvozu držav
+1. `uvoz.vseh.drzav` - podatki o uvozu držav
   - `drzava` - spremenljivka: ime države (besedilo),
   - `leto` - spremenljivka: leto uvoza (število)
   - `kolicina (MIO $)` - meritev: količina uvoza držav (število).
 
-2. `izvoz` - podatki o izvozu držav
+2. `izvoz.vseh.drzav` - podatki o izvozu držav
   - `drzava` - spremenljivka: ime države (besedilo),
   - `leto` - spremenljivka: leto uvoza (število)
   - `kolicina (MIO $)` - meritev: količina izvoza držav (število).
 
-3. `izvoz` - podatki o državah
+3. `podatki.o.drzavah` - podatki o državah
   - `Country` - spremenljivka: ime države (besedilo),
   - `Population` - meritev: število prebivalcev (število)
   - `Land Area (Km²)` - meritev: površina države (število).
   
-4. `UI.SLO` - podatki o uvozu in izvozu Slovenije
+4. `uvoz.in.izvoz.Slovenije` - podatki o uvozu in izvozu Slovenije
   - `UVOZ/IZVOZ` - spremenljivka: uvoz ali izvoz (besedilo),
   - `DRŽAVA` - spremenljivka: ime države (besedilo),
   - `SMTK` - meritev: klasifikacija blaga po SMTK (besedilo)
