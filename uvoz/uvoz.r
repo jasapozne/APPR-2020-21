@@ -69,6 +69,7 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 # fazah.
 
 #1. tabela
+uvazanje <- function(){
 uvoz <-read_csv("podatki/Uvoz.csv",
               locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
   pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
@@ -79,11 +80,15 @@ uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
 
 uvoz[["drzava"]] <- uvoz.1
+return(uvoz)
+}
+uvoz.vseh.drzav <- uvazanje()
 
 #2.tabela
+izvazanje <- function(){
 izvoz <-read_csv("podatki/Izvoz.csv",
                 locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>%
-  pivot_longer(c(-1), names_to="LETO",values_to="KOLICINA (MIO $)",values_drop_na=TRUE) %>%
+  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
   mutate(leto=parse_number(leto)) %>% rename(drzava=X2) 
 
 izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
@@ -91,31 +96,40 @@ izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The")
 
 izvoz[["drzava"]] <- izvoz.1
+return(izvoz)
+}
 
+izvoz.vseh.drzav <- izvazanje()
 
 #3. tabela
-
+uvoz.in.izvoz <- function(){
 UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
-                  names_to="leto",values_to="kolicina (€)",values_drop_na=TRUE) %>%
-                  mutate(leto=parse_number(leto)) %>% rename(SMTK=3) 
+                  names_to="LETO",values_to="KOLICINA (€)",values_drop_na=TRUE) %>%
+                  mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3) 
 
 IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") 
 UI.SLO[["DRŽAVA"]] <- IU.SLO
-
-
+return(UI.SLO)
+}
+uvoz.in.izvoz.Slovenije <- uvoz.in.izvoz()
 
 #4. tabela
+drzave.sveta <- function(){
 url <- "https://www.worldometers.info/world-population/population-by-country/"
 naslov <- read_html(url)
 podatki.drzav <- naslov %>% html_nodes(xpath="//table[@id='example2']") %>% 
   .[[1]] %>% html_table(dec=".") %>% select(2,3,7) %>% rename(Country=1,Population=2)
 
-povrsina.bv <- podatki.drzav$Population %>% str_replace("^[,]*$","")
-populacija.bv <- podatki.drzav$`Land Area (Km²)` %>% str_replace("^[,]*$","")  
+populacija.bv <- podatki.drzav$Population %>% str_replace_all(",","")
+povrsina.bv <- podatki.drzav$`Land Area (Km²)` %>% str_replace_all(",","")  
 
 podatki.drzav[["Population"]] <- populacija.bv
 podatki.drzav[[3]] <- povrsina.bv
 
 podatki.drzav$Population <- as.numeric(as.character(podatki.drzav$Population))
 podatki.drzav$`Land Area (Km²)` <- as.numeric(as.character(podatki.drzav$`Land Area (Km²)`))
+
+return(podatki.drzav)
+}
+podatki.o.drzavah <- drzave.sveta()
