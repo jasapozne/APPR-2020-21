@@ -1,6 +1,6 @@
 ---
-title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+title: "Analiza uvoza in izvoza v Sloveniji"
+author: "Jaša Pozne"
 output:
   html_document: default
   pdf_document:
@@ -22,6 +22,10 @@ source("lib/libraries.r", encoding="UTF-8")
 source("lib/rstudio.r", encoding="UTF-8")
 ```
 
+# Ideja projekta
+Spodaj bodo prikazani podatki uvoza in izvoza Slovenije, skozi obdobje desetih let. Poleg tega pa bo še narejena analiza primerjave Slovenije z ostalimi državami.
+
+
 # Izbira teme
 
 Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
@@ -36,26 +40,33 @@ Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Podatke imamo v dveh razpredelnicah v obliki *tidy data*.
+Uvozil sem podatke o uvoza/izvozu v obliki CSV s statističnega urada, IMF spletne strani ter v obliki HTML
+z Worldometer. Viri so natančneje navedeni v "README.md", kjer so tudi povezave do podatkov. Podatki so prikazani v štirih razpredelnicah v obliki *tidy data*.
 
-1. `druzine` - podatki o družinah za vsako občino
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `velikost.druzine` - spremenljivka: število otrok v družini (število: 1, 2, 3 ali 4, kjer zadnja vrednost pomeni 4 ali več),
-  - `stevilo.druzin` - meritev: število družin z ustreznim številom otrok v ustrezni občini (število).
 
-2. `obcine` - podatki o občinah
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `povrsina` - meritev: površina občine v km$^2$ (število),
-  - `prebivalci` - meritev: prebivalstvo občine (število),
-  - `gostota` - meritev: število prebivalcev na km$^2$ (število),
-  - `naselja` - meritev: število naselij v občini (število),
-  - `ustanovitev` - meritev: leto ustanovitve občine (število),
-  - `pokrajina` - meritev: pokrajina, ki ji občina pripada (neurejen faktor),
-  - `regija` - meritev: regija, ki ji občina pripada (neurejen faktor),
-  - `odcepitev` - meritev: podatki o občinah, od katerih se je občina odcepila (besedilo).
+1. `uvoz` - podatki o uvozu držav
+  - `drzava` - spremenljivka: ime države (besedilo),
+  - `leto` - spremenljivka: leto uvoza (število)
+  - `kolicina (MIO $)` - meritev: količina uvoza držav (število).
 
-**Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
+2. `izvoz` - podatki o izvozu držav
+  - `drzava` - spremenljivka: ime države (besedilo),
+  - `leto` - spremenljivka: leto uvoza (število)
+  - `kolicina (MIO $)` - meritev: količina izvoza držav (število).
+
+3. `izvoz` - podatki o državah
+  - `Country` - spremenljivka: ime države (besedilo),
+  - `Population` - meritev: število prebivalcev (število)
+  - `Land Area (Km²)` - meritev: površina države (število).
+  
+4. `UI.SLO` - podatki o uvozu in izvozu Slovenije
+  - `UVOZ/IZVOZ` - spremenljivka: uvoz ali izvoz (besedilo),
+  - `DRŽAVA` - spremenljivka: ime države (besedilo),
+  - `SMTK` - meritev: klasifikacija blaga po SMTK (besedilo)
+  - `LETO` - meritev: leto uvoza oz. izvoza (število).
+  -`KOLICINA (€)` - meritev: količina uvoza oz. izvoza (število)
+
+**Opomba**: da bi razpredelnici `uvoz` in `izvoz` res bili v obliki *tidy data*, bi morali odstraniti vrstice kjer se pojavljajo razne gospodarske skupnosti in skupine držav (saj so le-te izpeljane iz podatkov o trgovanju drugih držav).
 
 Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
