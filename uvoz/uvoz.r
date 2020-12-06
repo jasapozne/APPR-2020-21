@@ -68,6 +68,8 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 # 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
 # fazah.
 
+########################################################################################################
+
 #1. tabela
 uvazanje <- function(){
 uvoz <-read_csv("podatki/Uvoz.csv",
@@ -77,7 +79,9 @@ uvoz <-read_csv("podatki/Uvoz.csv",
 
 uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe Dem\\.", "Sao Tome and Principe") %>%
-  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep")
+  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
+  str_replace("CĂ´te d'Ivoire","Ivory Coast") %>% 
+  str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
 
 uvoz[["drzava"]] <- uvoz.1
 return(uvoz)
@@ -93,7 +97,9 @@ izvoz <-read_csv("podatki/Izvoz.csv",
 
 izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
-  str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The")
+  str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The") %>%
+  str_replace("CĂ´te d'Ivoire","Ivory Coast") %>% 
+  str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
 
 izvoz[["drzava"]] <- izvoz.1
 return(izvoz)
@@ -108,7 +114,7 @@ UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                   names_to="LETO",values_to="KOLICINA (€)",values_drop_na=TRUE) %>%
                   mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3) 
 
-IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") 
+IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 ]*\\]") 
 UI.SLO[["DRŽAVA"]] <- IU.SLO
 return(UI.SLO)
 }
@@ -116,9 +122,9 @@ uvoz.in.izvoz.Slovenije <- uvoz.in.izvoz()
 
 #4. tabela
 drzave.sveta <- function(){
-url <- "https://www.worldometers.info/world-population/population-by-country/"
-naslov <- read_html(url)
-podatki.drzav <- naslov %>% html_nodes(xpath="//table[@id='example2']") %>% 
+url1 <- "https://www.worldometers.info/world-population/population-by-country/"
+naslov1 <- read_html(url1)
+podatki.drzav <- naslov1 %>% html_nodes(xpath="//table[@id='example2']") %>% 
   .[[1]] %>% html_table(dec=".") %>% select(2,3,7) %>% rename(Country=1,Population=2)
 
 populacija.bv <- podatki.drzav$Population %>% str_replace_all(",","")
@@ -133,3 +139,20 @@ podatki.drzav$`Land Area (Km²)` <- as.numeric(as.character(podatki.drzav$`Land 
 return(podatki.drzav)
 }
 podatki.o.drzavah <- drzave.sveta()
+
+
+#5.tabela
+BDP.pkm <- function(){
+  url2 <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)"
+  naslov2 <- read_html(url2)
+  BDP.ppp <- naslov2 %>% html_nodes(xpath="//table[@class ='wikitable sortable']") %>% 
+    .[[1]] %>% html_table(dec=".") %>% rename(drzava=2,BDP=3) %>% select(2,3) 
+    
+  
+  GDP.ppp <- BDP.ppp$BDP %>% str_replace_all(",","")
+  BDP.ppp[["BDP"]] <- GDP.ppp
+  BDP.ppp$BDP <- as.numeric(as.character(BDP.ppp$BDP))
+  
+return(BDP.ppp)
+}
+BDP.po.kupni.moci <- BDP.pkm()
