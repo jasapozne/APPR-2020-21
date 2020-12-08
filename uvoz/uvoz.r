@@ -80,7 +80,7 @@ uvoz <-read_csv("podatki/Uvoz.csv",
 uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe Dem\\.", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
-  str_replace("CĂ´te d'Ivoire","Ivory Coast") %>% 
+  str_replace("CĂ\\´te d\\'Ivoire","Ivory Coast") %>% 
   str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
 
 uvoz[["drzava"]] <- uvoz.1
@@ -98,7 +98,7 @@ izvoz <-read_csv("podatki/Izvoz.csv",
 izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
   str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
   str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The") %>%
-  str_replace("CĂ´te d'Ivoire","Ivory Coast") %>% 
+  str_replace("CĂ\\´te d\\'Ivoire","Ivory Coast") %>%
   str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
 
 izvoz[["drzava"]] <- izvoz.1
@@ -114,12 +114,16 @@ UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                   names_to="LETO",values_to="KOLICINA (€)",values_drop_na=TRUE) %>%
                   mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3) 
 
-IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 ]*\\]") 
+IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 -,.]*\\]") %>%
+  str_remove("\\[od 2013M01, do 2012M12 Libijska arabska džamahirija\\]") %>% str_remove(",") %>%
+  str_replace("Države in ozemlja ki niso navedena v okviru trgovine z državami nečlanicami","Ostale države") 
+
 UI.SLO[["DRŽAVA"]] <- IU.SLO
 return(UI.SLO)
 }
 uvoz.in.izvoz.Slovenije <- uvoz.in.izvoz()
 
+IU.SLO %>% filter("")
 #4. tabela
 drzave.sveta <- function(){
 url1 <- "https://www.worldometers.info/world-population/population-by-country/"
