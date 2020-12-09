@@ -26,11 +26,7 @@ source("lib/rstudio.r", encoding="UTF-8")
 Spodaj bodo prikazani podatki uvoza in izvoza Slovenije, skozi obdobje desetih let. Poleg tega pa bo še narejena analiza primerjave Slovenije z ostalimi državami.
 
 
-# Izbira teme
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
-
-![](slike/grb.png)
 
 ***
 
@@ -41,39 +37,38 @@ source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 Uvozil sem podatke o uvoza/izvozu v obliki CSV s statističnega urada, IMF spletne strani ter v obliki HTML
-z Worldometer. Viri so natančneje navedeni v "README.md", kjer so tudi povezave do podatkov. Podatki so prikazani v štirih razpredelnicah v obliki *tidy data*.
+z Worldometer in Wikipeide. Viri so natančneje navedeni v "README.md", kjer so tudi povezave do podatkov. Podatki so prikazani v štirih razpredelnicah v obliki *tidy data*.
 
 
 1. `uvoz.vseh.drzav` - podatki o uvozu držav
   - `drzava` - spremenljivka: ime države (besedilo),
   - `leto` - spremenljivka: leto uvoza (število)
-  - `kolicina (MIO $)` - meritev: količina uvoza držav (število).
+  - `kolicina_MIO_$` - meritev: količina uvoza držav (število).
 
 2. `izvoz.vseh.drzav` - podatki o izvozu držav
   - `drzava` - spremenljivka: ime države (besedilo),
   - `leto` - spremenljivka: leto uvoza (število)
-  - `kolicina (MIO $)` - meritev: količina izvoza držav (število).
+  - `kolicina_MIO_$` - meritev: količina izvoza držav (število).
 
 3. `podatki.o.drzavah` - podatki o državah
-  - `Country` - spremenljivka: ime države (besedilo),
-  - `Population` - meritev: število prebivalcev (število)
-  - `Land Area (Km²)` - meritev: površina države (število).
+  - `drzava` - spremenljivka: ime države (besedilo),
+  - `populacija` - meritev: število prebivalcev (število)
+  - `povrsina` - meritev: površina države (število).
   
 4. `uvoz.in.izvoz.Slovenije` - podatki o uvozu in izvozu Slovenije
   - `UVOZ/IZVOZ` - spremenljivka: uvoz ali izvoz (besedilo),
-  - `DRŽAVA` - spremenljivka: ime države (besedilo),
-  - `SMTK` - meritev: klasifikacija blaga po SMTK (besedilo)
-  - `LETO` - meritev: leto uvoza oz. izvoza (število).
-  -`KOLICINA (€)` - meritev: količina uvoza oz. izvoza (število)
+  - `DRZAVA` - spremenljivka: ime države (besedilo),
+  - `SMTK` - spremenljivka: klasifikacija blaga po SMTK (besedilo)
+  - `LETO` - spremenljivka: leto uvoza oz. izvoza (število).
+  -`KOLICINA_€` - meritev: količina uvoza oz. izvoza (število)
+
+5. `BDP.po.kupni.moci` - podatki o BDP po kupni moči držav
+  - `drzava` - spremenljivka: drzava (besedilo),
+  - `BDP` - meritev: količina (število).
 
 **Opomba**: da bi razpredelnici `uvoz` in `izvoz` res bili v obliki *tidy data*, bi morali odstraniti vrstice kjer se pojavljajo razne gospodarske skupnosti in skupine držav (saj so le-te izpeljane iz podatkov o trgovanju drugih držav).
 
-Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
-```{r histogram, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x=naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
-```
 
 ***
 
@@ -83,36 +78,55 @@ ggplot(obcine, aes(x=naselja)) + geom_histogram() +
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 
-Spodnji zemljevid prikazuje povprečno velikost družine za vsako občino.
 
-```{r zemljevid, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-tm_shape(merge(zemljevid, povprecja, by.x="OB_UIME", by.y="obcina")) +
-  tm_polygons("povprecje", title="Povprečje") +
-  tm_layout(title="Povprečno število otrok v družini")
+***
+
+***
+# Preliminarna analiza
+```{r graf.trgovanja, echo=FALSE, message=FALSE, warning = FALSE}
+print(graf.trgovanja)
+```
+Opažam, da Slovenija največ trguje z državami EU medtem, ko je razmerej uvoza in izvoza med njim približno enako. Natančeneje si bom ogledal, države s katerimi največ trgujemo ter analiziral kako se je to spreminjalo skozi leta in tako poskušal ugotoviti s katerimi državami so se gospodarski odnosi izboljšali in s katerimi ne.  
+
+```{r graf.blago, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.blago)
+```
+Opamažam, da največji delež uvaza in izvoza predstavljata industrija in farmacija ter da obstaja vrsta blaga, katere delež uvoza/izvoza je zanimarjljivo majhen, tako da bom le-to blago tudi izpustil. Ponovno mislim pogledati, kako so se tokovi menjave spreminjali skozi leta in katero blago največkrat uvozimo/izvozimo iz držav s katerimi največ trgujemo. 
+
+```{r graf.uvoza.skozi.leta.m, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.uvoza.skozi.leta.m)
+```
+```{r graf.uvoza.skozi.leta.s, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.uvoza.skozi.leta.s)
+```
+```{r graf.uvoza.skozi.leta.v, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.uvoza.skozi.leta.v)
 ```
 
+Razlike med državami glede na letno raven uvoza so gromozanske, zato je bom raje kot vse države, primerjal le tiste iz skupine B in C v katerih je tudi Slovenija. Te države bom ponovno razdelil v podskupine, potem pa primerjal gibanje le-teh v primerjavi s Slovenijo (npr. ali je Slovenija skozi leta prehajala iz ene skupine v drugo). 
+
+```{r graf.izvoza.skozi.leta.m, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.izvoza.skozi.leta.m)
+```
+```{r graf.izvoza.skozi.leta.s, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.izvoza.skozi.leta.s)
+```
+```{r graf.izvoza.skozi.leta.v, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.izvoza.skozi.leta.v)
+```
+
+Tudi pri izvozu so razlike zelo velike, zato bom storil enako kot imam namen storiti pri uvozu (tj. B in C skupino razdeliti v podskupine in spremljati gibanje Slovenskega izvoza). Poleg tega pa bom države, ki imajo približno enak saldo menjave kot Slovenija primerjal po BDP-ju po kupni moči.
+
+
+Na koncu imam še namen analizirati uvoz in izvoz držav s približno enakim številom prebivastva kot Slovenija oz. s približno enako veliko površino, skozi obdobje desetih let. 
 ***
 
 # Napredna analiza podatkov
 
-```{r analiza}
-source("analiza/analiza.r", encoding="UTF-8")
-```
+#```{r analiza}
+#source("analiza/analiza.r", encoding="UTF-8")
+#```
 
-Spodnji graf prikazuje povezavo med številom naselij in površino občine.
 
-```{r graf, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina=names(skupine),
-                                     skupina=factor(skupine)), by="obcina")
-, aes(x=povrsina, y=naselja, color=skupina, size=prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-  guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
-```
+#***
 
-***
-
-```{r shiny}
-shinyAppDir("shiny", options=list(width="100%", height=600))
-```
