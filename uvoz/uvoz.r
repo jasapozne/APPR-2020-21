@@ -70,60 +70,42 @@ druzine <- uvozi.druzine(levels(obcine$obcina))
 
 ########################################################################################################
 
-#1. tabela
-uvazanje <- function(){
-uvoz <-read_csv("podatki/Uvoz.csv",
-              locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
-  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
-  mutate(leto=parse_number(leto)) %>% rename(drzava=X2)  
-
-uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
-  str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe Dem\\.", "Sao Tome and Principe") %>%
-  str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
-  str_replace("CĂ\\´te d\\'Ivoire","Ivory Coast") %>% 
-  str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
-
-uvoz[["drzava"]] <- uvoz.1
-return(uvoz)
+#1. in 2. tabela
+uvozi <- function(ime_datoteke){
+  ime <- paste0("podatki/",ime_datoteke, ".csv")
+  uvoz <-read_csv(ime, locale=locale(encoding="UTF-8"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
+    pivot_longer(c(-1), names_to="leto",values_to="kolicina_MIO_$",values_drop_na=TRUE) %>%
+    mutate(leto=parse_number(leto)) %>% rename(drzava=X2)  
+  
+  uvoz.1 <-uvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
+    str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
+    str_replace("São Tomé and Príncipe Dem\\. ", "Sao Tome and Principe") %>%
+    str_replace("Côte d'Ivoire","Ivory Coast") %>% 
+    str_replace("Curaçao Kingdom of the Netherlands","Curacao")
+  
+  uvoz$drzava <- uvoz.1
+  return(uvoz)
 }
-uvoz.vseh.drzav <- uvazanje()
-
-#2.tabela
-izvazanje <- function(){
-izvoz <-read_csv("podatki/Izvoz.csv",
-                locale=locale(encoding="Windows-1250"),skip = 6, col_names=TRUE) %>% select(-1) %>%
-  pivot_longer(c(-1), names_to="leto",values_to="kolicina (MIO $)",values_drop_na=TRUE) %>%
-  mutate(leto=parse_number(leto)) %>% rename(drzava=X2) 
-
-izvoz.1 <-izvoz$drzava %>% str_remove("\\.|,|:[A-Za-z ]*") %>%
-  str_replace("SĂŁo TomĂ© and PrĂ\\­ncipe\\. Rep\\. of", "Sao Tome and Principe") %>%
-  str_remove("Rep. [a-zA-Z .]*") %>% str_remove("Rep") %>% str_remove("The") %>%
-  str_replace("CĂ\\´te d\\'Ivoire","Ivory Coast") %>%
-  str_replace("CuraĂ§ao Kingdom of the Netherlands","Curacao")
-
-izvoz[["drzava"]] <- izvoz.1
-return(izvoz)
-}
-
-izvoz.vseh.drzav <- izvazanje()
+uvoz.vseh.drzav <- uvozi("Uvoz")
+izvoz.vseh.drzav <- uvozi("Izvoz")
 
 #3. tabela
 uvoz.in.izvoz <- function(){
 UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
-                  names_to="LETO",values_to="KOLICINA (€)",values_drop_na=TRUE) %>%
-                  mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3) 
+                  names_to="LETO",values_to="KOLICINA_€",values_drop_na=TRUE) %>%
+                  mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3,DRZAVA=2) 
 
-IU.SLO <- UI.SLO$DRŽAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 -,.]*\\]") %>%
+IU.SLO <- UI.SLO$DRZAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 -,.]*\\]") %>%
   str_remove("\\[od 2013M01, do 2012M12 Libijska arabska džamahirija\\]") %>% str_remove(",") %>%
   str_replace("Države in ozemlja ki niso navedena v okviru trgovine z državami nečlanicami","Ostale države") 
 
-UI.SLO[["DRŽAVA"]] <- IU.SLO
+UI.SLO[["DRZAVA"]] <- IU.SLO
 return(UI.SLO)
 }
 uvoz.in.izvoz.Slovenije <- uvoz.in.izvoz()
 
-IU.SLO %>% filter("")
+
 #4. tabela
 drzave.sveta <- function(){
 url1 <- "https://www.worldometers.info/world-population/population-by-country/"
@@ -140,7 +122,9 @@ podatki.drzav[[3]] <- povrsina.bv
 podatki.drzav$Population <- as.numeric(as.character(podatki.drzav$Population))
 podatki.drzav$`Land Area (Km²)` <- as.numeric(as.character(podatki.drzav$`Land Area (Km²)`))
 
-return(podatki.drzav)
+podatki.drzav.1 <- podatki.drzav %>% rename(drzava=1,populacija=2,povrsina=3)
+
+return(podatki.drzav.1)
 }
 podatki.o.drzavah <- drzave.sveta()
 
