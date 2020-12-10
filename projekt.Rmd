@@ -56,7 +56,7 @@ z Worldometer in Wikipeide. Viri so natančneje navedeni v "README.md", kjer so 
   - `povrsina` - meritev: površina države (število).
   
 4. `uvoz.in.izvoz.Slovenije` - podatki o uvozu in izvozu Slovenije
-  - `UVOZ/IZVOZ` - spremenljivka: uvoz ali izvoz (besedilo),
+  - `UVOZ_ALI_IZVOZ` - spremenljivka: uvoz ali izvoz (besedilo),
   - `DRZAVA` - spremenljivka: ime države (besedilo),
   - `SMTK` - spremenljivka: klasifikacija blaga po SMTK (besedilo)
   - `LETO` - spremenljivka: leto uvoza oz. izvoza (število).

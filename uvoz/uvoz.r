@@ -39,7 +39,7 @@ uvoz.in.izvoz <- function(){
 UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
                  locale=locale(encoding="Windows-1250")) %>%  pivot_longer(c(-1,-2,-3), 
                   names_to="LETO",values_to="KOLICINA_€",values_drop_na=TRUE) %>%
-                  mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3,DRZAVA=2) 
+                  mutate(LETO=parse_number(LETO)) %>% rename(SMTK=3,DRZAVA=2,UVOZ_ALI_IZVOZ=1) 
 
 IU.SLO <- UI.SLO$DRZAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 -,.]*\\]") %>%
   str_remove("\\[od 2013M01, do 2012M12 Libijska arabska džamahirija\\]") %>% str_remove(",") %>%

@@ -5,29 +5,14 @@
 
 library(ggplot2)
 
-###################################
-
-# Uvozimo zemljevid.
-zemljevid <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
-                             pot.zemljevida="OB", encoding="Windows-1250")
-# Če zemljevid nima nastavljene projekcije, jo ročno določimo
-proj4string(zemljevid) <- CRS("+proj=utm +zone=10+datum=WGS84")
-
-levels(zemljevid$OB_UIME) <- levels(zemljevid$OB_UIME) %>%
-  { gsub("Slovenskih", "Slov.", .) } %>% { gsub("-", " - ", .) }
-zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels=levels(obcine$obcina))
-
-# Izračunamo povprečno velikost družine
-povprecja <- druzine %>% group_by(obcina) %>%
-  summarise(povprecje=sum(velikost.druzine * stevilo.druzin) / sum(stevilo.druzin))
 
 #####################################################################################
 #Preliminarna analiza
-povprecje.trgovanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ/IZVOZ`,DRZAVA) %>%
+povprecje.trgovanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ_ALI_IZVOZ`,DRZAVA) %>%
   summarise(POVPRECJE=mean(`KOLICINA_€`)) %>% filter(POVPRECJE > 5e+04)
 
 
-surovine.izvazanja.in.uvazanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ/IZVOZ`,SMTK) %>%
+surovine.izvazanja.in.uvazanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ_ALI_IZVOZ`,SMTK) %>%
   summarise(POVPRECJE=mean(`KOLICINA_€`)) %>% filter(POVPRECJE > 0)
 
 
@@ -80,7 +65,7 @@ izvoz.po.skupinah.skozi.leta.v <- weri4
 
 
 #1. graf
-graf.trgovanja <- ggplot(povprecje.trgovanja, aes(x=POVPRECJE,y=DRZAVA, color=`UVOZ/IZVOZ`)) + geom_point()
+graf.trgovanja <- ggplot(povprecje.trgovanja, aes(x=POVPRECJE,y=DRZAVA, color=`UVOZ_ALI_IZVOZ`)) + geom_point()
 
 #2. graf
 graf.uvoza.skozi.leta.m <- ggplot(uvoz.po.skupinah.skozi.leta.m,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
@@ -93,12 +78,10 @@ graf.izvoza.skozi.leta.s <- ggplot(izvoz.po.skupinah.skozi.leta.s,aes(x=leto, y=
 graf.izvoza.skozi.leta.v <- ggplot(izvoz.po.skupinah.skozi.leta.v,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
 
 #4.graf
-graf.blago <- ggplot(surovine.izvazanja.in.uvazanja, aes(x=POVPRECJE,y=SMTK,color=`UVOZ/IZVOZ`)) + geom_point()
+graf.blago <- ggplot(surovine.izvazanja.in.uvazanja, aes(x=POVPRECJE,y=SMTK,color=`UVOZ_ALI_IZVOZ`)) + geom_point()
 
 #5.graf
 #graf.povrsina <- ggplot(drzave.s.e.povrsino, aes(x=Country,y=`Land Area (Km²)`)) + geom_point()
 
 #6.graf
 #graf.populacija <- ggplot(drzave.s.e.populacijo, aes(x=Country,y=Population)) + geom_point()
-
-
