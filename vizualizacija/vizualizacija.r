@@ -7,13 +7,23 @@
 
 
 #####################################################################################
-#Preliminarna analiza
-povprecje.trgovanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ_ALI_IZVOZ`,DRZAVA) %>%
-  summarise(POVPRECJE=mean(`KOLICINA_€`)) %>% filter(POVPRECJE > 5e+04)
+#Uvoz zemljevida 
+zemljevid <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip",
+                             "ne_50m_admin_0_countries", mapa = "zemljevidi", pot.zemljevida = "", encoding = "UTF-8") %>% 
+  fortify() %>% filter(CONTINENT == "Europe" | SOVEREIGNT %in% c("Cyprus"), long < 45 & long > -45 & lat > 30 & lat < 75)
+
+colnames(zemljevid)[11] <- 'drzava'
+zemljevid$drzava <- as.character(zemljevid$drzava)
+zemljevid$drzava[zemljevid$drzava == "Republic of Serbia"] <- "Serbia"
 
 
-surovine.izvazanja.in.uvazanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ_ALI_IZVOZ`,SMTK) %>%
-  summarise(POVPRECJE=mean(`KOLICINA_€`)) %>% filter(POVPRECJE > 0)
+zemljevid.1 <- zemljevid %>% data.frame 
+zemljevid.2 <- fortify(zemljevid.1)
+
+
+zemljevid.trgovanja.s.eu.drzavami <- ggplot(zemljevid,
+                                            aes(x=long,y=lat, group=group, color=id)) + geom_path(show.legend = FALSE)
+#print(zemljevid.trgovanja.s.eu.drzavami)
 
 
 ################################################################################
