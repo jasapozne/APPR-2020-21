@@ -21,7 +21,7 @@ Zanimalo me bo še kako se Slovenija primerja z ostalimi državami po uvozu,izvo
 
 - 4. tabela: Podatkih o državah- države, prebivalci, površina države
 
-- 5. tabela: BDP po kupni moči - države, BDP
+- 5. tabela: nominalni BDP per capita - države, BDP
 
 Podatkovni viri:
 Za projekt bom uporabil podatke iz:
@@ -31,7 +31,7 @@ Za projekt bom uporabil podatke iz:
 
 - worldometer:https://www.worldometers.info/world-population/population-by-country/ v XML
 
-- Wikipedia: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP) v XML
+- Wikipedia: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)_per_capita v XML
 
 ## Program
 
