@@ -1,9 +1,9 @@
 # 3. faza: Vizualizacija podatkov
 
 
-###################################
 
-library(ggplot2)
+
+
 
 
 #####################################################################################
@@ -16,72 +16,79 @@ surovine.izvazanja.in.uvazanja <- uvoz.in.izvoz.Slovenije %>% group_by(`UVOZ_ALI
   summarise(POVPRECJE=mean(`KOLICINA_€`)) %>% filter(POVPRECJE > 0)
 
 
-skupina.u <- izvoz.vseh.drzav %>% arrange(`kolicina_MIO_$`)
-skupina.u1 <- skupina.u %>% slice(1:500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.u1$skupina <- "A"
-skupina.u2 <- skupina.u %>% slice(501:1000) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.u2$skupina <- "B"
-skupina.u3 <- skupina.u %>% slice(1001:1500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.u3$skupina <- "C"
-skupina.u4 <- skupina.u %>% slice(1501:2000) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.u4$skupina <- "D"
-skupina.u5 <- skupina.u %>% slice(2001:2500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.u5$skupina <- "E"
-
-weru1 <- full_join(skupina.u1,skupina.u2)
-weru2 <- full_join(skupina.u3,weru1)
-weru3 <- full_join(weru2,skupina.u4)
-weru4 <- full_join(skupina.u5,weru3)
-
-uvoz.po.skupinah.skozi.leta.m <- weru2
-uvoz.po.skupinah.skozi.leta.s <- weru3
-uvoz.po.skupinah.skozi.leta.v <- weru4
-
-
-skupina.i <- izvoz.vseh.drzav %>% arrange(`kolicina_MIO_$`)
-skupina.i1 <- skupina.i %>% slice(1:500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.i1$skupina <- "A"
-skupina.i2 <- skupina.i %>% slice(501:1000) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.i2$skupina <- "B"
-skupina.i3 <- skupina.i %>% slice(1001:1500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.i3$skupina <- "C"
-skupina.i4 <- skupina.i %>% slice(1501:2000) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.i4$skupina <- "D"
-skupina.i5 <- skupina.i %>% slice(2001:2500) %>% group_by(leto) %>% summarise(povprecje=mean(`kolicina_MIO_$`))
-skupina.i5$skupina <- "E"
-
-weri1 <- full_join(skupina.i1,skupina.i2)
-weri2 <- full_join(weri1,skupina.i3)
-weri3 <- full_join(weri2,skupina.i4)
-weri4 <- full_join(skupina.i5,weri3)
-
-izvoz.po.skupinah.skozi.leta.m <- weri2
-izvoz.po.skupinah.skozi.leta.s <- weri3
-izvoz.po.skupinah.skozi.leta.v <- weri4
-
-#drzave.s.e.populacijo <- podatki.o.drzavah %>% filter(Population <(2078938 * 3)) %>% filter(Population > (2078938/3))
-
-#drzave.s.e.povrsino <- podatki.o.drzavah %>% filter(`Land Area (Km²)` <(20140 * 3.6)) %>% filter(`Land Area (Km²)` > (20140/3))
-
+################################################################################
 
 #1. graf
-graf.trgovanja <- ggplot(povprecje.trgovanja, aes(x=POVPRECJE,y=DRZAVA, color=`UVOZ_ALI_IZVOZ`)) + geom_point()
+graf.trgovanja.uvoz <- ggplot(viz.slo.uvz, aes(x=LETO,y=SKUPEN_UVOZ, color=DRZAVA)) + 
+  geom_line(size=1.5) + geom_point(col="white",size=2) +
+                                      ggtitle("Uvoz Slovenije iz držav")
+#print(graf.trgovanja.uvoz)
 
-#2. graf
-graf.uvoza.skozi.leta.m <- ggplot(uvoz.po.skupinah.skozi.leta.m,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
-graf.uvoza.skozi.leta.s <- ggplot(uvoz.po.skupinah.skozi.leta.s,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
-graf.uvoza.skozi.leta.v <- ggplot(uvoz.po.skupinah.skozi.leta.v,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
+graf.trgovanja.izvoz <- ggplot(viz.slo.izv, aes(x=LETO,y=SKUPEN_IZVOZ, color=DRZAVA)) + geom_line(size=2) + 
+  geom_point(col="white",size=2) +
+  ggtitle("Izvoz Slovenije iz držav")
+#print(graf.trgovanja.izvoz)
 
-#3.graf 
-graf.izvoza.skozi.leta.m <- ggplot(izvoz.po.skupinah.skozi.leta.m,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
-graf.izvoza.skozi.leta.s <- ggplot(izvoz.po.skupinah.skozi.leta.s,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
-graf.izvoza.skozi.leta.v <- ggplot(izvoz.po.skupinah.skozi.leta.v,aes(x=leto, y=povprecje, color=skupina)) + geom_line()
+##################################################################################
+#2.graf 
+graf.delez.uvoza <- ggplot(nadskupine.uvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  geom_bar(stat="identity") +
+  ggtitle("Struktura Slovenskega uvoza")
+##print(graf.delez.uvoza)
+graf.delez.izvoza <- ggplot(nadskupine.izvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  geom_bar(stat="identity") +
+  ggtitle("Struktura Slovenskega izvoza")
+##print(graf.delez.izvoza)
+#####################################################################################
+#3.Graf prikazuje primerjavo uvoza in izvoza z ostalimi državami, ki so v izhodišču imele približno enako količino u/i.
+graf.drzav.uvoza <- ggplot(drzave.uvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + geom_line(size=2) +
+  ggtitle("Uvoz Slovenije v primerjavi z drugimi državami")
+#print(graf.drzav.uvoza)
+graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + geom_line(size=2)+
+  ggtitle("Izvoz Slovenije v primerjavi z drugimi državami")
+#print(graf.drzav.izvoza)
+######################################################################################
+#4.Graf prikazuje primerjavo u/i in bdp po populaciji 
+graf.bdp.populacija.izvoz <- ggplot(izvoz.in.bdp.glede.na.prebivalce.1, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
+  geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
+                      alpha =ifelse(izvoz.in.bdp.glede.na.prebivalce.1$BDP>7000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP in izvoza, držav s približno enako populacijo, leta 2019")
+#print(graf.bdp.populacija.izvoz)
 
-#4.graf
-graf.blago <- ggplot(surovine.izvazanja.in.uvazanja, aes(x=POVPRECJE,y=SMTK,color=`UVOZ_ALI_IZVOZ`)) + geom_point()
 
-#5.graf
-#graf.povrsina <- ggplot(drzave.s.e.povrsino, aes(x=Country,y=`Land Area (Km²)`)) + geom_point()
+#######################################################################################
+graf.bdp.populacija.uvoz <- ggplot(uvoz.in.bdp.glede.na.prebivalce.1, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
+  geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
+                      alpha =ifelse(uvoz.in.bdp.glede.na.prebivalce.1$BDP>8000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP in uvoza, držav s približno enako populacijo, leta 2019")
+#print(graf.bdp.populacija.uvoz)
+####################################################################################
+#5.Graf prikazuje primerjavo u/i in bdp po povrsini
 
-#6.graf
-#graf.populacija <- ggplot(drzave.s.e.populacijo, aes(x=Country,y=Population)) + geom_point()
+graf.bdp.povrsina.izvoz <- ggplot(izvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
+  geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
+                      alpha =ifelse(izvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP držav s približno enako površino, leta 2019")
+#print(graf.bdp.povrsina.izvoz) 
+
+
+###################################################################################
+graf.bdp.povrsina.uvoz <- ggplot(uvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
+  geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
+                      alpha =ifelse(uvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP držav s približno enako površino, leta 2019")
+#print(graf.bdp.povrsina.uvoz)
+
+###################################################################################
+#Zemljevid
+
+Zemljevid.Slovenskega.salda <- ggplot() + geom_polygon(STR, 
+                                                       mapping = aes(x=long, y=lat, group=group, fill=skupina,color="black"))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(),
+        axis.ticks.y=element_blank()) + 
+  guides(fill=guide_legend("Saldo menjave Slovenije s tujino:")
+         ,color=guide_legend("obrobe")) +
+  ggtitle("Prikaz Slovenskega salda menjave s tujino za leto 2019") +
+  labs(x = " ") +
+  labs(y = " ") + scale_fill_manual(values=c("#FEE0D2","#DEEBF7","#DE2D26","#FC9272","#3182BD","#9ECAE1","orange"))
+#print(Zemljevid.Slovenskega.salda)
+
+
