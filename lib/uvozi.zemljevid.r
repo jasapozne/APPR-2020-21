@@ -6,6 +6,9 @@ library(readr)
 library(ggplot2)
 library(digest)
 library(mosaic)
+library(RColorBrewer)
+library(spdplyr)
+library(tmap)
 
 # Funkcija uvozi.zemljevid(url, ime.zemljevida, pot.zemljevida="",
 #                          mapa="../zemljevidi", encoding=NULL, force=FALSE)
@@ -67,5 +70,25 @@ uvozi.zemljevid <- function(url, ime.zemljevida, pot.zemljevida="",
 }
 
 # Primer uvoza zemljevida (slovenske občine)
-# obcine <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
-#                           pot.zemljevida="OB", encoding="Windows-1250")
+ obcine <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
+                           pot.zemljevida="OB", encoding="Windows-1250")
+
+
+
+
+zemljevid <- uvozi.zemljevid("http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_admin_0_countries.zip",
+                             "ne_50m_admin_0_countries", mapa = "zemljevidi", pot.zemljevida = "", encoding = "UTF-8") %>% 
+  fortify() %>% filter(CONTINENT == "Europe" | SOVEREIGNT %in% c("Cyprus"), long < 45 & long > -45 & lat > 30 & lat < 75)
+
+colnames(zemljevid)[11] <- 'drzava'
+zemljevid$drzava <- as.character(zemljevid$drzava)
+zemljevid$drzava[zemljevid$drzava == "Republic of Serbia"] <- "Serbia"
+
+
+zemljevid.1 <- zemljevid %>% data.frame 
+zemljevid.2 <- fortify(zemljevid.1)
+
+
+zemljevid.trgovanja.s.eu.drzavami <- ggplot(zemljevid,
+                                            aes(x=long,y=lat, group=group, color=id)) + geom_path(show.legend = FALSE)
+#print(zemljevid.trgovanja.s.eu.drzavami)
