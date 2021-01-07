@@ -62,7 +62,7 @@ z Worldometer in Wikipeide. Viri so natančneje navedeni v "README.md", kjer so 
   - `LETO` - spremenljivka: leto uvoza oz. izvoza (število).
   -`KOLICINA_€` - meritev: količina uvoza oz. izvoza (število)
 
-5. `BDP.po.kupni.moci` - podatki o BDP po kupni moči držav
+5. `nominalni.BDP.per.capita` - podatki o nominalnem BDP per capita
   - `drzava` - spremenljivka: drzava (besedilo),
   - `BDP` - meritev: količina (število).
 
@@ -73,7 +73,9 @@ z Worldometer in Wikipeide. Viri so natančneje navedeni v "README.md", kjer so 
 ***
 
 # Analiza in vizualizacija podatkov
-
+```{r analiza, results='hide'}
+source("analiza/analiza.r", encoding="UTF-8")
+```
 ```{r vizualizacija, results='hide'}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
@@ -81,52 +83,91 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 
 ***
 
-***
-# Preliminarna analiza
-```{r graf.trgovanja, echo=FALSE, message=FALSE, warning = FALSE}
-print(graf.trgovanja)
-```
-Opažam, da Slovenija največ trguje z državami EU medtem, ko je razmerej uvoza in izvoza med njim približno enako. Natančeneje si bom ogledal, države s katerimi največ trgujemo ter analiziral kako se je to spreminjalo skozi leta in tako poskušal ugotoviti s katerimi državami so se gospodarski odnosi izboljšali in s katerimi ne.  
 
-```{r graf.blago, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.blago)
-```
-Opamažam, da največji delež uvaza in izvoza predstavljata industrija in farmacija ter da obstaja vrsta blaga, katere delež uvoza/izvoza je zanimarjljivo majhen, tako da bom le-to blago tudi izpustil. Ponovno mislim pogledati, kako so se tokovi menjave spreminjali skozi leta in katero blago največkrat uvozimo/izvozimo iz držav s katerimi največ trgujemo. 
-
-```{r graf.uvoza.skozi.leta.m, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.uvoza.skozi.leta.m)
-```
-```{r graf.uvoza.skozi.leta.s, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.uvoza.skozi.leta.s)
-```
-```{r graf.uvoza.skozi.leta.v, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.uvoza.skozi.leta.v)
+```{r graf.trgovanja.uvoz, echo=FALSE, message=FALSE, warning = FALSE}
+print(graf.trgovanja.uvoz)
 ```
 
-Razlike med državami glede na letno raven uvoza so gromozanske, zato je bom raje kot vse države, primerjal le tiste iz skupine B in C v katerih je tudi Slovenija. Te države bom ponovno razdelil v podskupine, potem pa primerjal gibanje le-teh v primerjavi s Slovenijo (npr. ali je Slovenija skozi leta prehajala iz ene skupine v drugo). 
-
-```{r graf.izvoza.skozi.leta.m, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.izvoza.skozi.leta.m)
-```
-```{r graf.izvoza.skozi.leta.s, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.izvoza.skozi.leta.s)
-```
-```{r graf.izvoza.skozi.leta.v, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.izvoza.skozi.leta.v)
-```
-
-Tudi pri izvozu so razlike zelo velike, zato bom storil enako kot imam namen storiti pri uvozu (tj. B in C skupino razdeliti v podskupine in spremljati gibanje Slovenskega izvoza). Poleg tega pa bom države, ki imajo približno enak saldo menjave kot Slovenija primerjal po BDP-ju po kupni moči.
-
-
-Na koncu imam še namen analizirati uvoz in izvoz držav s približno enakim številom prebivastva kot Slovenija oz. s približno enako veliko površino, skozi obdobje desetih let. 
 ***
 
-# Napredna analiza podatkov
-
-#```{r analiza}
-#source("analiza/analiza.r", encoding="UTF-8")
-#```
+Uvoz iz prikazanih držav v povprečju počasi narašča. Malce bolj dinamično rast imata le Italija in Nemčija. Iz vseh prikazanih držav pa največ uvozimo ali leta 2018 ali leta 2019.
 
 
-#***
+***
+
+```{r graf.trgovanja.izvoz, echo=FALSE, message=FALSE, warning = FALSE}
+print(graf.trgovanja.izvoz)
+```
+
+***
+  Podobno kot pri uvozu v povprečju izvoz v prikazane države počasi narašča. Ponovno imata najbolj dinamično rast Nemčija in Italija. Pojavi pa se tudi dlje časa trajajoč padec izvoza v Francijo. Ponovno se maksimumi pojavijo proti koncu intervala.
+
+  Na splošno lahko vidimo, da so se trgoviske vezi Slovenije z drugimi državami izboljševale.
+
+***
+
+```{r graf.delez.uvoza, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.delez.uvoza)
+```
+```{r graf.delez.izvoza, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.delez.izvoza)
+```
+  Vidimo lahko, da sta si obe strukturi zelo podobni. Pri obeh tako prevladujejo panoge strojev in transportnih naprav, medtem ko pijača in tobak ter proizvodi in transakcije tvorijo tako, majhen delež uvoza in izvoza, da na grafu sploh niso vidni. Skozi leta ne pride do pretiranih sprememb v nobeni panogi, kar je tudi posledica, da tako grafa, kot vsi stolpci, delujeta enaka.
+
+***
+
+```{r Zemljevid.Slovenskega.salda, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(Zemljevid.Slovenskega.salda)
+```
+
+Kot je že iz zemljevida razvidno, ima Slovenija pozitiven saldo menjave predvsem z večjimi državami, medtem ko predvsem iz sosednjih držav uvozimo dosti več blaga kot ga izvozimo.
+
+***
+
+```{r graf.drzav.izvoza, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.drzav.izvoza)
+```
+  Uvoz Slovenije je tako, kot uvoz ostalih držav naraščal.
+  
+```{r graf.drzav.uvoza, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.drzav.uvoza)
+```
+  Če pri uvozu ni prišlo do večjih sprememb, to ne velja za izvoz. Kot lahko vidimo leta 2010, ima Slovenija podobno količino izvoza, kot še drugih pet držav. In če je Slovenija sprva bila ena izmed držav, ki so najmanj izvažale, se je to po letu 2016 spremeni. Tako Slovenija ob koncu intervala izvaža največjo količino blaga. 
+
+***
+
+```{r graf.bdp.populacija.izvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.bdp.populacija.izvoz)
+```
+```{r graf.bdp.populacija.uvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.bdp.populacija.uvoz)
+```
+  **Opomba:** 
+- Qatar sem kot osamelca izločil, saj je tako graf dosti bolj pregleden
+- Velikost točk je pogojena s številom prebivalcev
+  Opazimo, da v primerjavi z ostalimi državi, največ izvozimo in uvozimo kar sami, prav tako pa smo v samem vrhu tudi po nominalnem BDP per capita. 
+
+
+```{r graf.bdp.povrsina.izvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.bdp.povrsina.izvoz)
+```
+```{r graf.bdp.povrsina.uvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(graf.bdp.povrsina.uvoz)
+```
+**Opomba:** 
+- Velikost točk je pogojena z velikostjo površine
+
+  Slovenija tokrat izstopa manj izrazito, a še zmeraj dovolj, da sodi med bolje razvite države v skupini.
+
+***
+
+
+
+
+
+
+
+
+
+
 
