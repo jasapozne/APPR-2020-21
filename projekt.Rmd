@@ -73,9 +73,6 @@ z Worldometer in Wikipeide. Viri so natančneje navedeni v "README.md", kjer so 
 ***
 
 # Analiza in vizualizacija podatkov
-```{r analiza, results='hide'}
-source("analiza/analiza.r", encoding="UTF-8")
-```
 ```{r vizualizacija, results='hide'}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
@@ -165,7 +162,9 @@ print(graf.bdp.povrsina.uvoz)
 
 
 
-
+```{r analiza, results='hide'}
+source("analiza/analiza.r", encoding="UTF-8")
+```
 
 
 
