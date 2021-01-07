@@ -1,18 +1,5 @@
 # 2. faza: Uvoz podatkov
 
-#################################
-
-library(readr)
-library(dplyr)
-library(tidyr)
-library(httr)
-require(rvest)
-require(XML)
-require(stringr)
-
-####################################
-
-
 
 
 #1. in 2. tabela
@@ -43,7 +30,8 @@ UI.SLO <-read_csv("podatki/UinIpoSMTK.csv",
 
 IU.SLO <- UI.SLO$DRZAVA %>% str_replace("[A-Z]* ","") %>% str_remove("\\[[a-zA-Z0-9 -,.]*\\]") %>%
   str_remove("\\[od 2013M01, do 2012M12 Libijska arabska džamahirija\\]") %>% str_remove(",") %>%
-  str_replace("Države in ozemlja ki niso navedena v okviru trgovine z državami nečlanicami","Ostale države") 
+  str_replace("Države in ozemlja ki niso navedena v okviru trgovine z državami nečlanicami","Ostale države") %>%
+  str_replace("Srbija in Črna gora \\[2004M01 - 2005M05\\]","Jugoslavija")
 
 UI.SLO[["DRZAVA"]] <- IU.SLO
 return(UI.SLO)
@@ -76,12 +64,12 @@ podatki.o.drzavah <- drzave.sveta()
 
 #5.tabela
 BDP.pkm <- function(){
-  url2 <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)"
+  url2 <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)_per_capita"
   naslov2 <- read_html(url2)
   BDP.ppp <- naslov2 %>% html_nodes(xpath="//table[@class ='wikitable sortable']") %>% 
     .[[1]] %>% html_table(dec=".") %>% rename(drzava=2,BDP=3) %>% select(2,3) 
     
-  GDP.ppp1 <- BDP.ppp$drzava %>% str_replace("Côte d'Ivoire","Ivory Coast")
+  GDP.ppp1 <- BDP.ppp$drzava %>% str_replace("Côte d'Ivoire","Ivory Coast") %>% str_replace(", The","")
   GDP.ppp2 <- BDP.ppp$BDP %>% str_replace_all(",","") 
   BDP.ppp[["BDP"]] <- GDP.ppp2
   BDP.ppp$drzava <- GDP.ppp1
@@ -91,4 +79,4 @@ BDP.pkm <- function(){
   
 return(BDP.ppp1)
 }
-BDP.po.kupni.moci <- BDP.pkm()
+nominalni.BDP.per.capita <- BDP.pkm()
