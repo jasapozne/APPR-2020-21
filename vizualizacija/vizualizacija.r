@@ -309,7 +309,7 @@ graf.bdp.populacija.uvoz <- ggplot(uvoz.in.bdp.glede.na.prebivalce.1, aes(x=BDP,
 graf.bdp.povrsina.izvoz <- ggplot(izvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
   geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
                       alpha =ifelse(izvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP držav s približno enako površino, leta 2019")
+  ggtitle("Primerjava BDP in uvoza držav s približno enako površino, leta 2019")
 #print(graf.bdp.povrsina.izvoz) 
 
 
@@ -317,7 +317,7 @@ graf.bdp.povrsina.izvoz <- ggplot(izvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`k
 graf.bdp.povrsina.uvoz <- ggplot(uvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
   geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
                       alpha =ifelse(uvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP držav s približno enako površino, leta 2019")
+  ggtitle("Primerjava BDP in izvoza držav s približno enako površino, leta 2019")
 #print(graf.bdp.povrsina.uvoz)
 
 ###################################################################################
