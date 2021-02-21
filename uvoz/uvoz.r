@@ -3,6 +3,10 @@
 
 
 #1. in 2. tabela
+trim <- function( x ) {
+  gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
+}
+
 uvozi <- function(ime_datoteke){
   ime <- paste0("podatki/",ime_datoteke, ".csv")
   uvoz <-read_csv(ime, locale=locale(encoding="UTF-8"),skip = 6, col_names=TRUE) %>% select(-1) %>% 
@@ -13,11 +17,11 @@ uvozi <- function(ime_datoteke){
     str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
     str_replace("São Tomé and Príncipe Dem\\. ", "Sao Tome and Principe") %>%
     str_replace("Côte d'Ivoire","Ivory Coast") %>% 
-    str_replace("Curaçao Kingdom of the Netherlands","Curacao")
+    str_replace("Curaçao Kingdom of the Netherlands","Curacao") 
   
-  uvoz$drzava <- uvoz.1
+  uvoz$drzava <- trim(uvoz.1) 
   return(uvoz)
-}
+} 
 uvoz.vseh.drzav <- uvozi("Uvoz")
 izvoz.vseh.drzav <- uvozi("Izvoz")
 
