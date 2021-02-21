@@ -1,17 +1,14 @@
 library(shiny)
+library(plotly)
+
+
+
 
 shinyUI(fluidPage(
-  
-  titlePanel("Slovenske občine"),
-  
-  tabsetPanel(
-      tabPanel("Velikost družine",
-               DT::dataTableOutput("druzine")),
-      
-      tabPanel("Število naselij",
-               sidebarPanel(
-                  uiOutput("pokrajine")
-                ),
-               mainPanel(plotOutput("naselja")))
-    )
+  plotlyOutput("UPr"),
+  plotlyOutput("IPr"),
+  plotlyOutput("UPo"),
+  plotlyOutput("IPo"),
+  plotlyOutput("grupiranje")
 ))
+
