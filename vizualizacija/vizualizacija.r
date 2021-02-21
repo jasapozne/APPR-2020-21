@@ -28,14 +28,10 @@ zemljevid.trgovanja.s.eu.drzavami <- ggplot(zemljevid,
 memory.limit(size=100000)
 
 skupine.drzav <- function(trgovanje){
-  trgovanje.brez <- trgovanje$'drzava' %>% str_replace("Belgium-Luxembourg","Bel")
-  trgovanje$'drzava' <- trgovanje.brez
-  izbrane.drzave <- trgovanje %>% filter(str_detect(drzava,"Slovenia") | str_detect(drzava,"Bulgaria") | str_detect(drzava,"New Zealand")
-                                         |str_detect(drzava,"Luxembourg")| str_detect(drzava,"Oman") | str_detect(drzava,"Peru") |
-                                           str_detect(drzava,"Ecuador")| str_detect(drzava,"Syrian Arab"))
+  izbrane.drzave <- trgovanje[trgovanje$drzava %in% c("Slovenia","Bulgaria", "New Zealand", "Luxembourg", "Oman", "Peru", "Ecuador", "Syrian Arab"),]
   return(izbrane.drzave)
-  
 }
+
 #-UVOZ:
 drzave.uvoza <- skupine.drzav(uvoz.vseh.drzav)
 #-IZVOZ
@@ -120,47 +116,14 @@ viz.slo.uvz <- slovenija.uvoz %>% group_by(LETO,DRZAVA) %>% summarise(SKUPEN_UVO
 #ustvariš nadskupine
 
 nadskupine.blaga <- function(blago){
-  izvoz.1.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"0[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.1.nadskupina$SKUPINA <- "Žive živali in živila"
-  izvoz.2.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"1[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.2.nadskupina$SKUPINA <- "Pijače in tobak"
-  izvoz.3.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"2[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.3.nadskupina$SKUPINA <- "Surove snovi"
-  izvoz.4.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"3[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.4.nadskupina$SKUPINA <- "Mineralna goriva in maziva"
-  izvoz.5.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"4[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.5.nadskupina$SKUPINA <- "Olja, masti, voski živali"
-  izvoz.6.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"5[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.6.nadskupina$SKUPINA <- "Kemični proizvodi"
-  izvoz.7.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"6[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.7.nadskupina$SKUPINA <- "Izdelki po materialu"
-  izvoz.8.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"7[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.8.nadskupina$SKUPINA <- "Stroji in transportne naprave"
-  izvoz.9.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"8[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.9.nadskupina$SKUPINA <- "Razni izdelki"
-  izvoz.10.nadskupina <- uvoz.in.izvoz.Slovenije %>% filter(str_detect(UVOZ_ALI_IZVOZ,blago)) %>%
-    filter(str_detect(SMTK,"9[0-9]")) %>% group_by(LETO) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
-  izvoz.10.nadskupina$SKUPINA <- "Proizvodi in transakcije"
   
-  wer1 <- full_join(izvoz.1.nadskupina,izvoz.2.nadskupina)
-  wer2 <- full_join(izvoz.3.nadskupina,izvoz.4.nadskupina)
-  wer3 <- full_join(izvoz.5.nadskupina,izvoz.6.nadskupina)
-  wer4 <- full_join(izvoz.7.nadskupina,izvoz.8.nadskupina)
-  wer5 <- full_join(izvoz.9.nadskupina,izvoz.10.nadskupina)
-  wer6 <- full_join(wer1,wer2)
-  wer7 <- full_join(wer3,wer4)
-  wer8 <- full_join(wer5,wer6)
-  wer9 <- full_join(wer7,wer8)
-  return(wer9)
+  data <- uvoz.in.izvoz.Slovenije[uvoz.in.izvoz.Slovenije$UVOZ_ALI_IZVOZ == blago,]
+  data$skupina <- substring(data$SMTK, 1, 1)
+  data <- data %>% group_by(LETO, skupina) %>% summarise(KOLICINA=sum(`KOLICINA_€`)) 
+  data <- data %>% group_by(LETO) %>% summarise(SKUPINA = c("Žive živali in živila", "Pijače in tobak","Surove snovi","Mineralna goriva in maziva","Olja, masti, voski živali",
+                                                            "Kemični proizvodi" , "Izdelki po materialu","Stroji in transportne naprave","Razni izdelki"  ,"Proizvodi in transakcije"  ), 
+                                                KOLICINA = KOLICINA)
+  return(data)
 }
 
 nadskupine.za.izvoz <- nadskupine.blaga("Izvoz")
@@ -218,19 +181,19 @@ izracun.salda$DRZAVA <- izbrisimo.presledek
 poz.saldo <- izracun.salda %>% filter(saldo_menjave>=0) 
 poz.saldo$ialiu <- "Izvoz"
 poz.saldo.1 <- poz.saldo %>% filter(saldo_menjave<=46451811)
-poz.saldo.1$skupina <- "do 46451811"
+poz.saldo.1$skupina <- "i) do 46451811"
 poz.saldo.2 <- poz.saldo %>% filter(saldo_menjave >= 46451811) %>% filter(saldo_menjave<=146158188)
-poz.saldo.2$skupina <- "od 46451812 do 146158188"
+poz.saldo.2$skupina <- "ii) od 46451812 do 146158188"
 poz.saldo.3 <- poz.saldo %>% filter(saldo_menjave>146158188)
-poz.saldo.3$skupina <- "od 146158189 do 1170205678"                          
+poz.saldo.3$skupina <- "iii) od 146158189 do 1170205678"                          
 neg.saldo <- izracun.salda %>% filter(saldo_menjave<0)
 neg.saldo$ialiu <- "Uvoz"
 neg.saldo.1 <- neg.saldo %>% filter(saldo_menjave>=(-76289086)) 
-neg.saldo.1$skupina <- "do -76289086"
+neg.saldo.1$skupina <- "iv) do -76289086"
 neg.saldo.2 <- neg.saldo %>% filter(saldo_menjave<(-76289086)) %>% filter(saldo_menjave>=(-317189621))
-neg.saldo.2$skupina <- "od -76289087 do -317189621"
+neg.saldo.2$skupina <- "v) od -76289087 do -317189621"
 neg.saldo.3 <- neg.saldo %>% filter(saldo_menjave<(-317189621))
-neg.saldo.3$skupina <- "od -317189622 do -1112788761"
+neg.saldo.3$skupina <- "vi) od -317189622 do -1112788761"
 
 
 weri1 <- full_join(poz.saldo.1,poz.saldo.2)
@@ -244,7 +207,7 @@ izracun.saldo.s.skupinami <- full_join(weri4,weri2)
 STR.b <- left_join(zemljevid.2,izracun.saldo.s.skupinami, by=c("drzava"="DRZAVA"))
 
 dodajmo.se.SLO <- STR.b %>% filter(str_detect(drzava,"Slovenia"))
-dodajmo.se.SLO$skupina <- "Slovenia"
+dodajmo.se.SLO$skupina <- "vii) Slovenia"
 dodajmo.se.SLO$ialiu <- "Uvoz"
 
 STR.a <- full_join(STR.b,dodajmo.se.SLO)
@@ -263,37 +226,61 @@ barvajmo.2 <- brewer.pal(neg.sk1,"Reds")
 
 #1. graf
 graf.trgovanja.uvoz <- ggplot(viz.slo.uvz, aes(x=LETO,y=SKUPEN_UVOZ, color=DRZAVA)) + 
+  scale_x_continuous(breaks = seq(2010, 2019, by=1))+
+  geom_point(col="white",size=2) +
   geom_line(size=1.5) + geom_point(col="white",size=2) +
-                                      ggtitle("Uvoz Slovenije iz držav")
+  ggtitle("Uvoz Slovenije iz držav")
 #print(graf.trgovanja.uvoz)
 
-graf.trgovanja.izvoz <- ggplot(viz.slo.izv, aes(x=LETO,y=SKUPEN_IZVOZ, color=DRZAVA)) + geom_line(size=2) + 
-  geom_point(col="white",size=2) +
+graf.trgovanja.izvoz <- ggplot(viz.slo.izv, aes(x=LETO,y=SKUPEN_IZVOZ, color=DRZAVA)) + 
+  geom_line(size=2) +
+  scale_x_continuous(breaks = seq(2010, 2019, by=1))+
+  geom_point(col="white",size=2) + 
   ggtitle("Izvoz Slovenije iz držav")
 #print(graf.trgovanja.izvoz)
 
 ##################################################################################
 #2.graf 
-graf.delez.uvoza <- ggplot(nadskupine.uvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  geom_bar(stat="identity") +
+graf.delez.uvoza <- ggplot(nadskupine.uvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  
+  geom_bar(stat="identity") +
+  scale_x_continuous(breaks = seq(2010, 2019, by=1)) +
   ggtitle("Struktura Slovenskega uvoza")
 ##print(graf.delez.uvoza)
-graf.delez.izvoza <- ggplot(nadskupine.izvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  geom_bar(stat="identity") +
+graf.delez.izvoza <- ggplot(nadskupine.izvoz.delez, aes(x=LETO,y=DELEZ,fill=SKUPINA)) +  
+  geom_bar(stat="identity") +
+  scale_x_continuous(breaks = seq(2010, 2019, by=1)) + 
   ggtitle("Struktura Slovenskega izvoza")
 ##print(graf.delez.izvoza)
 #####################################################################################
 #3.Graf prikazuje primerjavo uvoza in izvoza z ostalimi državami, ki so v izhodišču imele približno enako količino u/i.
-graf.drzav.uvoza <- ggplot(drzave.uvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + geom_line(size=2) +
+graf.drzav.uvoza <- ggplot(drzave.uvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) +
+  scale_x_continuous(breaks = seq(2010, 2019, by=1)) +
+  geom_point(col="white",size=2) +
+  geom_line(size=2) + 
+  geom_point(size=4)
   ggtitle("Uvoz Slovenije v primerjavi z drugimi državami")
 #print(graf.drzav.uvoza)
-graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + geom_line(size=2)+
+graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + 
+  scale_x_continuous(breaks = seq(2010, 2019, by=1)) +
+  geom_point(col="white",size=2) +
+  geom_line(size=2)+  
+  geom_point(size=4)
   ggtitle("Izvoz Slovenije v primerjavi z drugimi državami")
 #print(graf.drzav.izvoza)
 ######################################################################################
 #4.Graf prikazuje primerjavo u/i in bdp po populaciji 
-graf.bdp.populacija.izvoz <- ggplot(izvoz.in.bdp.glede.na.prebivalce.1, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
-  geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
-                      alpha =ifelse(izvoz.in.bdp.glede.na.prebivalce.1$BDP>7000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP in izvoza, držav s približno enako populacijo, leta 2019")
+graf.bdp.populacija.izvoz <- ggplot(izvoz.in.bdp.glede.na.prebivalce.1, 
+                                    aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
+                                    geom_point() + 
+                                    geom_text(aes(label=drzava),
+                                    alpha =ifelse(izvoz.in.bdp.glede.na.prebivalce.1$BDP>7000,1,0),
+                                    hjust=1, vjust=1.4,show.legend = ifelse(izvoz.in.bdp.glede.na.prebivalce.1$BDP<7000,TRUE,FALSE)) +
+                                    ggtitle("Primerjava BDP in izvoza, držav s približno enako populacijo, leta 2019") +  
+                                    scale_x_log10() + scale_y_log10() +
+                                    theme(axis.text.x=element_blank(),
+                                          axis.ticks.x=element_blank(),
+                                          axis.text.y=element_blank(),
+                                          axis.ticks.y=element_blank())
 #print(graf.bdp.populacija.izvoz)
 
 
@@ -301,23 +288,35 @@ graf.bdp.populacija.izvoz <- ggplot(izvoz.in.bdp.glede.na.prebivalce.1, aes(x=BD
 graf.bdp.populacija.uvoz <- ggplot(uvoz.in.bdp.glede.na.prebivalce.1, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
   geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
                       alpha =ifelse(uvoz.in.bdp.glede.na.prebivalce.1$BDP>8000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP in uvoza, držav s približno enako populacijo, leta 2019")
+  ggtitle("Primerjava BDP in uvoza, držav s približno enako populacijo, leta 2019") +  scale_x_log10() + scale_y_log10() +
+    theme(axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank())
 #print(graf.bdp.populacija.uvoz)
 ####################################################################################
 #5.Graf prikazuje primerjavo u/i in bdp po povrsini
 
 graf.bdp.povrsina.izvoz <- ggplot(izvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
   geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
-                      alpha =ifelse(izvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP in uvoza držav s približno enako površino, leta 2019")
+                      alpha =ifelse(izvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0.5),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP in uvoza držav s približno enako površino, leta 2019") +  scale_x_log10() + scale_y_log10() + 
+    theme(axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank())
 #print(graf.bdp.povrsina.izvoz) 
 
 
 ###################################################################################
 graf.bdp.povrsina.uvoz <- ggplot(uvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
   geom_point(show.legend = FALSE) + geom_text(aes(label=drzava),
-                      alpha =ifelse(uvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0),hjust=1, vjust=1.4,show.legend = FALSE) +
-  ggtitle("Primerjava BDP in izvoza držav s približno enako površino, leta 2019")
+                      alpha =ifelse(uvoz.in.bdp.glede.na.povrsino$BDP>20000,1,0.5),hjust=1, vjust=1.4,show.legend = FALSE) +
+  ggtitle("Primerjava BDP in izvoza držav s približno enako površino, leta 2019")+  scale_x_log10() + scale_y_log10() + 
+    theme(axis.text.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank())
 #print(graf.bdp.povrsina.uvoz)
 
 ###################################################################################
@@ -331,7 +330,7 @@ Zemljevid.Slovenskega.salda <- ggplot() + geom_polygon(STR,
          ,color=guide_legend("obrobe")) +
   ggtitle("Prikaz Slovenskega salda menjave s tujino za leto 2019") +
   labs(x = " ") +
-  labs(y = " ") + scale_fill_manual(values=c("#FEE0D2","#DEEBF7","#DE2D26","#FC9272","#3182BD","#9ECAE1","orange"))
+  labs(y = " ") + scale_fill_manual(values=c("#DEEBF7","#9ECAE1","#3182BD","#FEE0D2","#FC9272","#DE2D26","orange"))
 #print(Zemljevid.Slovenskega.salda)
 
 
