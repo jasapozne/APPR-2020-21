@@ -133,28 +133,10 @@ print(graf.drzav.uvoza)
 
 ***
 
-```{r graf.bdp.populacija.izvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.bdp.populacija.izvoz)
-```
-```{r graf.bdp.populacija.uvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.bdp.populacija.uvoz)
-```
-  **Opomba:** 
-- Qatar sem kot osamelca izločil, saj je tako graf dosti bolj pregleden
-- Velikost točk je pogojena s številom prebivalcev
+
   Opazimo, da v primerjavi z ostalimi državi, največ izvozimo in uvozimo kar sami, prav tako pa smo v samem vrhu tudi po nominalnem BDP per capita. 
 
-
-```{r graf.bdp.povrsina.izvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.bdp.povrsina.izvoz)
-```
-```{r graf.bdp.povrsina.uvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
-print(graf.bdp.povrsina.uvoz)
-```
-**Opomba:** 
-- Velikost točk je pogojena z velikostjo površine
-
-  Slovenija tokrat izstopa manj izrazito, a še zmeraj dovolj, da sodi med bolje razvite države v skupini.
+Slovenija tokrat izstopa manj izrazito, a še zmeraj dovolj, da sodi med bolje razvite države v skupini.
 
 ***
 
@@ -166,7 +148,16 @@ print(graf.bdp.povrsina.uvoz)
 source("analiza/analiza.r", encoding="UTF-8")
 ```
 
+```{r napoved.za.uvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(napoved.za.uvoz)
+```
+```{r napoved.za.izvoz, echo=FALSE, message=FALSE, fig.align='center', warning = FALSE}
+print(napoved.za.izvoz)
+```
+Vidimo, da napoved močno odstopa od realnosti tako pri uvozu kot izvozu. Ob predpostavki, da krize ne bi bilo, bi količina uvoza in izvoza bila zagotovo bistveno višja kot pa jo napoveduje prikazan model.
 
 
-
-
+```{r shiny}
+shinyAppDir("shiny", options=list(width="100%", height=600))
+```
+**Opomba**: Zaradi boljše preglednosti je bila panoga Kovinski denar izpuščena. Le-ta pa spada v 4 skupino v kateri močno prevladuje uvoz.
