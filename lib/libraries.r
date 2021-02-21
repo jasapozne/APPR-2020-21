@@ -12,6 +12,8 @@ require(rvest)
 require(XML)
 require(stringr)
 library(ggplot2)
+library(ggdendro)
+
 
 options(gsubfn.engine="R")
 
