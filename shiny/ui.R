@@ -5,7 +5,7 @@ shinyUI(fluidPage(
   navbarPage("Primerjava držav s podobnimi karakteristikami po BDP in trgovanju",
              
              tabPanel("Izvoz in BDP glede na površino skozi leta",
-                      titlePanel(title = h2("Izvoz in bdp glede na površino")),
+                      titlePanel(title = h2("Izvoz in BDP: površina")),
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
@@ -21,7 +21,7 @@ shinyUI(fluidPage(
                       )),
 
               tabPanel("Izvoz in BDP glede na prebivalce skozi leta",
-                      titlePanel(title = h2("Izvoz in bdp glede na prebivalce")),
+                      titlePanel(title = h2("Izvoz in BDP: prebivalci")),
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
@@ -37,7 +37,7 @@ shinyUI(fluidPage(
                                    )),
 
               tabPanel("Uvoz in BDP glede na površino skozi leta",
-                      titlePanel(title = h2("Uvoz in bdp glede na povrsino")),
+                      titlePanel(title = h2("Uvoz in BDP: površina")),
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
@@ -52,7 +52,7 @@ shinyUI(fluidPage(
                                   )
                                   )),
               tabPanel("Uvoz in BDP glede na prebivalce skozi leta",
-                      titlePanel(title = h2("Uvoz in bdp glede na prebivalce")),
+                      titlePanel(title = h2("Uvoz in BDP: prebivalci")),
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
