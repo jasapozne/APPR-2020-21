@@ -6,7 +6,7 @@ shinyServer(function(input, output) {
   output$IPo <- renderPlotly({izvoz.in.bdp.glede.na.povrsino.shiny %>% filter(leto == input$leto) %>% 
     ggplot(aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
       geom_point() +
-      ggtitle("Primerjava BDP in izvoza držav s približno enako površino")+  scale_x_log10() + scale_y_log10() + 
+      ggtitle("Izvoz in BDP: površina")+  scale_x_log10() + scale_y_log10() + 
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
@@ -15,7 +15,7 @@ shinyServer(function(input, output) {
   output$IPr <- renderPlotly({izvoz.in.bdp.glede.na.prebivalce.shiny %>% filter(leto == input$leto) %>% 
       ggplot(aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
       geom_point() +
-      ggtitle("Primerjava BDP in izvoza držav s približno enako prebivalci")+  scale_x_log10() + scale_y_log10() + 
+      ggtitle("Izvoz in BDP: prebivalci")+  scale_x_log10() + scale_y_log10() + 
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
   output$UPo <- renderPlotly({uvoz.in.bdp.glede.na.povrsino.shiny %>% filter(leto == input$leto) %>% 
       ggplot(aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=povrsina,label=drzava)) + 
       geom_point() +
-      ggtitle("Primerjava BDP in uvoza držav s približno enako površino")+  scale_x_log10() + scale_y_log10() + 
+      ggtitle("Uvoz in BDP: površina")+  scale_x_log10() + scale_y_log10() + 
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
   output$UPr <- renderPlotly({uvoz.in.bdp.glede.na.prebivalce.shiny %>% filter(leto == input$leto) %>% 
       ggplot(aes(x=BDP,y=`kolicina_MIO_$`,color=drzava,size=populacija,label=drzava)) + 
       geom_point() +
-      ggtitle("Primerjava BDP in uvoza držav s približno enako prebivalci")+  scale_x_log10() + scale_y_log10() + 
+      ggtitle("Uvoz in BDP: prebivalci")+  scale_x_log10() + scale_y_log10() + 
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
