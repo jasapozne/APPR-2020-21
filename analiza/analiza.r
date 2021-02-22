@@ -39,14 +39,14 @@ napoved.za.izvoz <- ggplot(skupen.izvoz, aes(x=LETO,y=SKUPAJ)) + geom_point() + 
   scale_x_continuous(breaks = seq(2010, 2021, by=1)) + 
   geom_line(data=napoved.u1, aes(x=LETO,y=SKUPAJ),color="orange",size=1.3) + 
   geom_point(data=napoved.u1, aes(x=LETO,y=SKUPAJ),color="yellow",size=2) +
-  ggtitle("Napoved za izvoz Slovenije")
+  ggtitle("Napoved za izvoz Slovenije") + xlab("leto") + ylab("skupaj")
 #print(napoved.za.izvoz)
 
 napoved.za.uvoz <- ggplot(skupen.uvoz, aes(x=LETO,y=SKUPAJ)) + geom_point() +
   scale_x_continuous(breaks = seq(2010, 2021, by=1)) + geom_smooth() +
   geom_line(data=napoved.i1, aes(x=LETO,y=SKUPAJ),color="orange",size=1.3)+
   geom_point(data=napoved.i1, aes(x=LETO,y=SKUPAJ),color="yellow",size=2.2)+
-  ggtitle("Napoved za uvoz Slovenije")
+  ggtitle("Napoved za uvoz Slovenije") + xlab("leto") + ylab("skupaj")
 #print(napoved.za.uvoz)
 
 ##########skupine glede na lastnosti ############
@@ -69,8 +69,8 @@ zdruzeno.skupaj <- full_join(skupine.uvoz,skupine.izvoz )
 zdruzeno.skupaj1 <- zdruzeno.skupaj[-c(1,2)] %>% filter(Izvoz > 1e+3)
 izpuscene.panoge <- zdruzeno.skupaj %>% filter(Izvoz < 1e+3)
 
-TRT <- zdruzeno.skupaj1 %>% as.matrix() %>% scale()
-D <- dist(TRT)
+zdruz <- zdruzeno.skupaj1 %>% as.matrix() %>% scale()
+D <- dist(zdruz)
 mol <- hclust(D)
 #plot(mol,hang=-1, cex=0.3, main=zdruzeno.skupaj1)
 p <- cutree(mol,h=2)

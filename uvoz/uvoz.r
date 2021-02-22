@@ -17,7 +17,8 @@ uvozi <- function(ime_datoteke){
     str_remove("Rep. [a-zA-Z .]*") %>%str_remove("Rep") %>%
     str_replace("São Tomé and Príncipe Dem\\. ", "Sao Tome and Principe") %>%
     str_replace("Côte d'Ivoire","Ivory Coast") %>% 
-    str_replace("Curaçao Kingdom of the Netherlands","Curacao") 
+    str_replace("Curaçao Kingdom of the Netherlands","Curacao") %>% str_remove(" The") %>% str_remove(" Province of China") %>%
+    str_remove(" ublic of") %>% str_remove(" Kingdom of") %>% str_remove(" Dem.") %>% str_remove(" State of")
   
   uvoz$drzava <- trim(uvoz.1) 
   return(uvoz)

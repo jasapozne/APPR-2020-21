@@ -13,7 +13,7 @@ require(XML)
 require(stringr)
 library(ggplot2)
 library(ggdendro)
-
+library(plotly)
 
 options(gsubfn.engine="R")
 
