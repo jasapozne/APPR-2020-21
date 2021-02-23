@@ -81,7 +81,7 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ***
 
 
-```{r graf.trgovanja.uvoz, echo=FALSE, message=FALSE, warning = FALSE}
+```{r graf.trgovanja.uvoz, echo=FALSE, message=FALSE,fig.align='center', warning = FALSE}
 print(graf.trgovanja.uvoz)
 ```
 
@@ -92,7 +92,7 @@ Uvoz iz prikazanih držav v povprečju počasi narašča. Malce bolj dinamično 
 
 ***
 
-```{r graf.trgovanja.izvoz, echo=FALSE, message=FALSE, warning = FALSE}
+```{r graf.trgovanja.izvoz, echo=FALSE, message=FALSE,fig.align='center', warning = FALSE}
 print(graf.trgovanja.izvoz)
 ```
 
@@ -158,6 +158,6 @@ Vidimo, da napoved močno odstopa od realnosti tako pri uvozu kot izvozu. Ob pre
 
 
 ```{r shiny}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+shinyAppDir("shiny", options=list(width="100%", height=1000))
 ```
 **Opomba**: Zaradi boljše preglednosti je bila panoga Kovinski denar izpuščena. Le-ta pa spada v 4 skupino v kateri močno prevladuje uvoz.
