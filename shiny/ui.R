@@ -8,10 +8,9 @@ shinyUI(fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
-                            inputId = "leto",
+                            inputId = "leto1",
                             label = "leto",
-                            choices = c("2010", "2011", "2012","2013","2014","2015","2016","2017",
-                                        "2018","2019")
+                            choices = c(2010:2019)
                           )
                         ),
                         mainPanel(
@@ -23,10 +22,9 @@ shinyUI(fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
-                          inputId = "leto",
+                          inputId = "leto2",
                           label = "leto",
-                          choices = c("2010", "2011", "2012","2013","2014","2015","2016","2017",
-                                                     "2018","2019")
+                          choices = c(2010:2019)
                                        )
                                      ),
                           mainPanel(
@@ -38,10 +36,9 @@ shinyUI(fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
-                          inputId = "leto",
+                          inputId = "leto3",
                           label = "leto",
-                          choices = c("2010", "2011", "2012","2013","2014","2015","2016","2017",
-                                                                  "2018","2019")
+                          choices = c(2010:2019)
                                   )
                                   ),
                           mainPanel(
@@ -52,10 +49,9 @@ shinyUI(fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           selectInput(
-                          inputId = "leto",
+                          inputId = "leto4",
                           label = "leto",
-                          choices = c("2010", "2011", "2012","2013","2014","2015","2016","2017",
-                                                                               "2018","2019")
+                          choices = c(2010:2019)
                                   )
                                   ),
                           mainPanel(

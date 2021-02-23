@@ -30,7 +30,7 @@ memory.limit(size=100000)
 skupine.drzav <- function(trgovanje){
   izbrane.drzave <- trgovanje[trgovanje$drzava %in% c("Slovenia","Bulgaria", "New Zealand", "Luxembourg", "Oman", "Peru", "Ecuador", "Syrian Arab"),] 
   izbrane.drzave1 <- izbrane.drzave$drzava %>% str_replace("Bulgaria","Bulgarija") %>% str_replace("New Zealand","Nova Zelandija")%>% 
-      str_replace("Luxembourg","Luksemburg")%>% str_replace("Ecuador","Ekvador")%>% str_replace("Syrian Arab","Sirija")
+      str_replace("Luxembourg","Luksemburg")%>% str_replace("Ecuador","Ekvador")%>% str_replace("Syrian Arab","Sirija") %>% str_replace("Slovenia","Slovenija")
   izbrane.drzave[["drzava"]] <- izbrane.drzave1
   return(izbrane.drzave)
 }
@@ -74,7 +74,31 @@ bdp.uvoz.izvoz <- function(im.ex){
 gdp.ex$drzava <- bdp.uvoz.izvoz(gdp.ex)
 gdp.im$drzava <- bdp.uvoz.izvoz(gdp.im)
 
+shiny.prevod <- function(podatki){
+  shiny.za <- podatki$drzava  %>%
+    str_replace("Taiwan","Tajvan") %>%
+    str_replace("New Caledonia", "Nova Kaledonija") %>% 
+    str_replace("North Macedonia","Severna Makedonija") %>% 
+    str_replace("Equatorial Guinea","Ekvatorialna Gvineja") %>% str_replace("Solomon Islands","Salomonovi otoki") %>%
+    str_replace("Georgija","Gruzija") %>% str_replace("Eritrea","Eritreja") %>% str_replace("Uruguay","Urugvaj") %>%
+    str_replace("Bosnia and Herzegovina","Bosna in Herzegovina") %>% str_replace("Moldova","Moldavija") %>%
+    str_replace("Croatia","Hrvaška")  %>% str_replace("Mongolia","Mongolija") %>%
+    str_replace("Armenia","Armenija") %>% str_replace("Jamaica","Jamajka") %>% str_replace("Qatar","Katar") %>% str_replace("Albania","Albanija") %>%
+      str_replace("Lithuania","Litva") %>% str_replace("Namibia","Namibija") %>% str_replace("Gambia","Gambija") %>% str_replace("Botswana","Bocvana") %>%
+      str_replace("Lesotho","Lesoto") %>% str_replace("Latvia","Latvija") %>% str_replace("Bahrain","Bahrajn") %>%
+      str_replace("Estonia","Estonija") %>% str_replace("Netherlands","Nizozemska") %>% str_replace("Cyprus","Ciper") %>% str_replace("Eswatini","Svazi") %>%
+      str_replace("Bosnia and Herzegovina","Bosna in Herzegovina") %>% str_replace("Moldova","Moldavija") %>%
+    str_replace("Rwanda","Ruvanda") %>% str_replace("Slovenia","Slovenija") %>% str_replace("Belgium","Belgija") %>%
+      str_replace("Armenia","Armenija") %>% str_replace("Jamaica","Jamajka") %>% str_replace("Qatar","Katar") %>% str_replace("Albania","Albanija") %>%
+      str_replace("Israel","Izrael") %>% str_replace("Switzerland","Švica") %>% str_replace("El Salvador","Salvador") %>% str_replace("Kuwait","Kuvajt") %>%
+      str_replace("Džibuti","Džibuti") %>% str_replace("Bhutan","Butan") %>% str_replace("Guinea\\-Bissau","Gvineja Bissau")
+  return(shiny.za)
+}
 
+drzave.po.populaciji.in.bdp$drzava <- shiny.prevod(drzave.po.populaciji.in.bdp)  
+drzave.po.povrsini.in.bdp$drzava <- shiny.prevod(drzave.po.povrsini.in.bdp) 
+izvoz.vseh.drzav$drzava <- shiny.prevod(izvoz.vseh.drzav)
+uvoz.vseh.drzav$drzava <- shiny.prevod(uvoz.vseh.drzav) 
 
 izvoz.in.bdp.glede.na.prebivalce<- left_join(drzave.po.populaciji.in.bdp,gdp.ex)
 izvoz.in.bdp.glede.na.povrsino<- left_join(drzave.po.povrsini.in.bdp,gdp.ex)
@@ -84,7 +108,6 @@ izvoz.in.bdp.glede.na.prebivalce.shiny<- left_join(drzave.po.populaciji.in.bdp,i
 izvoz.in.bdp.glede.na.povrsino.shiny<- left_join(drzave.po.povrsini.in.bdp,izvoz.vseh.drzav) %>% arrange(leto) %>% slice(1:320)
 uvoz.in.bdp.glede.na.prebivalce.shiny<- left_join(drzave.po.populaciji.in.bdp,uvoz.vseh.drzav)%>% arrange(leto) %>% slice(1:290)
 uvoz.in.bdp.glede.na.povrsino.shiny<- left_join(drzave.po.povrsini.in.bdp,uvoz.vseh.drzav)%>% arrange(leto) %>% slice(1:320)
-
 
 
 uvoz.in.bdp.glede.na.povrsino.2 <- uvoz.in.bdp.glede.na.povrsino %>% arrange(BDP) %>% slice(19:30)
@@ -237,20 +260,20 @@ barvajmo.2 <- brewer.pal(neg.sk1,"Reds")
 ######################################################################
 
 #1. graf
-graf.trgovanja.uvoz <- ggplot(viz.slo.uvz, aes(x=LETO,y=SKUPEN_UVOZ, color=DRZAVA)) + 
+graf.trgovanja.uvoz <- ggplot(viz.slo.uvz, aes(x=LETO,y=SKUPEN_UVOZ/1e6, color=DRZAVA)) + 
   scale_x_continuous(breaks = seq(2010, 2019, by=1))+
   geom_point(col="white",size=2) +
   geom_line(size=1.5) + geom_point(col="white",size=2) +
-  ggtitle("Uvoz Slovenije iz držav") + ylab("skupen uvoz") + xlab("leto") + 
+  ggtitle("Uvoz Slovenije iz držav") + ylab("skupen uvoz v milijonih evrov") + xlab("leto") + 
   guides(color=guide_legend("država"))
 #print(graf.trgovanja.uvoz)
 
-graf.trgovanja.izvoz <- ggplot(viz.slo.izv, aes(x=LETO,y=SKUPEN_IZVOZ, color=DRZAVA)) + 
+graf.trgovanja.izvoz <- ggplot(viz.slo.izv, aes(x=LETO,y=SKUPEN_IZVOZ/1e6, color=DRZAVA)) + 
   guides(color=guide_legend("država")) +
   geom_line(size=2) +
   scale_x_continuous(breaks = seq(2010, 2019, by=1))+
   geom_point(col="white",size=2) + 
-  ggtitle("Izvoz Slovenije iz držav") + ylab("skupen izvoz")+ xlab("leto")
+  ggtitle("Izvoz Slovenije iz držav") + ylab("skupen izvoz v milijonih evrov")+ xlab("leto")
 #print(graf.trgovanja.izvoz)
 
 ##################################################################################
@@ -275,14 +298,16 @@ graf.drzav.uvoza <- ggplot(drzave.uvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drz
   geom_point(col="white",size=2) +
   geom_line(size=2) + 
   geom_point(size=4) +
-  ggtitle("Uvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v mio $")
+  ggtitle("Uvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v milijonih dolarjev") + 
+  guides(fill=guide_legend("država"))
 #print(graf.drzav.uvoza)
 graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + 
   scale_x_continuous(breaks = seq(2010, 2019, by=1)) +
   geom_point(col="white",size=2) +
   geom_line(size=2)+  
   geom_point(size=4) +
-  ggtitle("Izvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v mio $")
+  ggtitle("Izvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v milijonih dolarjev") + 
+  guides(fill=guide_legend("država"))
 #print(graf.drzav.izvoza)
 ######################################################################################
 #4.Graf prikazuje primerjavo u/i in bdp po populaciji 
@@ -339,16 +364,22 @@ graf.bdp.povrsina.uvoz <- ggplot(uvoz.in.bdp.glede.na.povrsino, aes(x=BDP,y=`kol
 ###################################################################################
 #Zemljevid
 
-Zemljevid.Slovenskega.salda <- ggplot() + geom_polygon(STR, 
-                                                       mapping = aes(x=long, y=lat, group=group, fill=skupina))+
+brks <- c(-320, -76, 0, 46, 150) # razmejitve med barvami
+rng <- range(izracun.salda$saldo_menjave/1e6)
+vals <- rescale(c(rng[1], brks, rng[2]))
+Zemljevid.Slovenskega.salda <- ggplot(left_join(zemljevid.2, izracun.salda,
+                                                by=c("drzava"="DRZAVA")),
+                                      aes(x=long, y=lat, group=group, fill=saldo_menjave/1e6)) +
+  geom_polygon() +
+  scale_fill_stepsn(name="Saldo menjave Slovenije\ns tujino (mio €)",
+                    breaks=brks, values=(vals[1:6] + vals[2:7])/2,
+                    colours=c("#DE2D26", "#FC9272", "#FEE0D2", "#DEEBF7", "#9ECAE1", "#3182BD"),
+                    na.value="orange", show.limits=TRUE,
+                    labels=scales::label_number(accuracy=1, big.mark="")) +
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),panel.background = element_rect(fill = "dark gray"),plot.background = element_rect(fill = "dark gray"),
-        legend.key = element_rect(fill = "dark gray"), legend.background = element_rect(fill = "dark gray")) + 
-  guides(fill=guide_legend("Saldo menjave Slovenije s tujino:")
-         ) +
-  ggtitle("Prikaz Slovenskega salda menjave s tujino za leto 2019") +
-  labs(x = " ") +
-  labs(y = " ") + scale_fill_manual(values=c("#DEEBF7","#9ECAE1","#3182BD","#FEE0D2","#FC9272","#DE2D26","orange"))
-
+        axis.ticks.y=element_blank(), panel.background=element_rect(fill="dark gray"),
+        plot.background=element_rect(fill="dark gray"), legend.key=element_rect(fill="dark gray"),
+        legend.background=element_rect(fill="dark gray")) + 
+  ggtitle("Slovenski saldo menjave s tujino za leto 2019") +
+  labs(x="", y="")
 #print(Zemljevid.Slovenskega.salda)
-

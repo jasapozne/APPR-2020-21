@@ -35,18 +35,18 @@ napoved.i <- predict(predict.model.i,pred.i )
 napoved.u1 <- pred.u %>% mutate(SKUPAJ=predict(predict.model.u, .))
 napoved.i1 <- pred.i %>% mutate(SKUPAJ=predict(predict.model.i, .))
 
-napoved.za.izvoz <- ggplot(skupen.izvoz, aes(x=LETO,y=SKUPAJ)) + geom_point() + geom_smooth() +
+napoved.za.izvoz <- ggplot(skupen.izvoz, aes(x=LETO,y=SKUPAJ/1e6)) + geom_point() + geom_smooth() +
   scale_x_continuous(breaks = seq(2010, 2021, by=1)) + 
-  geom_line(data=napoved.u1, aes(x=LETO,y=SKUPAJ),color="orange",size=1.3) + 
-  geom_point(data=napoved.u1, aes(x=LETO,y=SKUPAJ),color="yellow",size=2) +
-  ggtitle("Napoved za izvoz Slovenije") + xlab("leto") + ylab("skupaj")
+  geom_line(data=napoved.u1, aes(x=LETO,y=SKUPAJ/1e6),color="orange",size=1.3) + 
+  geom_point(data=napoved.u1, aes(x=LETO,y=SKUPAJ/1e6),color="yellow",size=2) +
+  ggtitle("Napoved za izvoz Slovenije") + xlab("leto") + ylab("skupna količina izvoza v milijonih evrov")
 #print(napoved.za.izvoz)
 
-napoved.za.uvoz <- ggplot(skupen.uvoz, aes(x=LETO,y=SKUPAJ)) + geom_point() +
+napoved.za.uvoz <- ggplot(skupen.uvoz, aes(x=LETO,y=SKUPAJ/1e6)) + geom_point() +
   scale_x_continuous(breaks = seq(2010, 2021, by=1)) + geom_smooth() +
-  geom_line(data=napoved.i1, aes(x=LETO,y=SKUPAJ),color="orange",size=1.3)+
-  geom_point(data=napoved.i1, aes(x=LETO,y=SKUPAJ),color="yellow",size=2.2)+
-  ggtitle("Napoved za uvoz Slovenije") + xlab("leto") + ylab("skupaj")
+  geom_line(data=napoved.i1, aes(x=LETO,y=SKUPAJ/1e6),color="orange",size=1.3)+
+  geom_point(data=napoved.i1, aes(x=LETO,y=SKUPAJ/1e6),color="yellow",size=2.2)+
+  ggtitle("Napoved za uvoz Slovenije") + xlab("leto") + ylab("skupna količina uvoza v milijonih evrov")
 #print(napoved.za.uvoz)
 
 ##########skupine glede na lastnosti ############
