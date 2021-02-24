@@ -56,8 +56,8 @@ shinyUI(fluidPage(
                                   ),
                           mainPanel(
                           plotlyOutput(outputId = "UPr")
-                                    ))),
- 
+                                    )))
+),
             plotlyOutput("grupiranje")                                                            
-            ))
+            )
 )
