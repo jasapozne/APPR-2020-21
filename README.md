@@ -68,6 +68,10 @@ Za zagon tega vzorca je potrebno namestiti sledeče pakete za R:
 * `maptools` - za delo z zemljevidi
 * `tmap` - za izrisovanje zemljevidov
 * `extrafont` - za pravilen prikaz šumnikov (neobvezno)
+* `httr` - za dodatne funkcije
+* `XML` - za branje podatkov iz spletnih strani
+*`ggdendro` - za dendrogram
+*`plotly` - za izrisovanje `hover` grafov v Shinyju
 
 ## Binder
 
