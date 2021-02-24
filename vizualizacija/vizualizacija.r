@@ -299,7 +299,7 @@ graf.drzav.uvoza <- ggplot(drzave.uvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drz
   geom_line(size=2) + 
   geom_point(size=4) +
   ggtitle("Uvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v milijonih dolarjev") + 
-  guides(fill=guide_legend("država"))
+  guides(col=guide_legend("država"))
 #print(graf.drzav.uvoza)
 graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=drzava)) + 
   scale_x_continuous(breaks = seq(2010, 2019, by=1)) +
@@ -307,7 +307,7 @@ graf.drzav.izvoza <- ggplot(drzave.izvoza, aes(x=leto,y=`kolicina_MIO_$`,color=d
   geom_line(size=2)+  
   geom_point(size=4) +
   ggtitle("Izvoz Slovenije v primerjavi z drugimi državami") + ylab("količina v milijonih dolarjev") + 
-  guides(fill=guide_legend("država"))
+  guides(col=guide_legend("država"))
 #print(graf.drzav.izvoza)
 ######################################################################################
 #4.Graf prikazuje primerjavo u/i in bdp po populaciji 
