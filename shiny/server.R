@@ -10,7 +10,7 @@ shinyServer(function(input, output) {
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
-            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjih") + guides(col=guide_legend("države"),
+            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjev") + guides(col=guide_legend("država"),
                                                                               size=guide_legend(""))
   })
   output$IPr <- renderPlotly({izvoz.in.bdp.glede.na.prebivalce.shiny %>% filter(leto == input$leto2) %>% 
@@ -20,7 +20,7 @@ shinyServer(function(input, output) {
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
-            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjih") +guides(col=guide_legend("države"),
+            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjev") +guides(col=guide_legend("država"),
                                                                              size=guide_legend(""))
   
   })
@@ -32,7 +32,7 @@ shinyServer(function(input, output) {
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
-            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjih") + guides(col=guide_legend("države"),
+            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjev") + guides(col=guide_legend("država"),
                                                                               size=guide_legend(""))
   })
   output$UPr <- renderPlotly({uvoz.in.bdp.glede.na.prebivalce.shiny %>% filter(leto == input$leto4) %>% 
@@ -42,7 +42,7 @@ shinyServer(function(input, output) {
       theme(axis.text.x=element_blank(),
             axis.ticks.x=element_blank(),
             axis.text.y=element_blank(),
-            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjih") + guides(col=guide_legend("države"),
+            axis.ticks.y=element_blank()) + ylab("količina v milijonih dolarjev") + guides(col=guide_legend("država"),
                                                                               size=guide_legend(""))
   })
   
@@ -54,7 +54,7 @@ shinyServer(function(input, output) {
                                                 axis.ticks.y=element_blank()) +
       geom_abline(slope=1, intercept=0,linetype="dashed", color = "orange")+
       ggtitle("Primerjava različnih panog glede na uvoz in izvoz leta 2019") +
-      xlab("Uvoz v evrih") + ylab("Izvoz v evrih")+guides(col=guide_legend("skupine"))
+      xlab("Uvoz v evrih") + ylab("Izvoz v evrih")+guides(col=guide_legend("skupina"))
   })
   
 }
