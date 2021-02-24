@@ -70,8 +70,8 @@ Za zagon tega vzorca je potrebno namestiti sledeče pakete za R:
 * `extrafont` - za pravilen prikaz šumnikov (neobvezno)
 * `httr` - za dodatne funkcije
 * `XML` - za branje podatkov iz spletnih strani
-*`ggdendro` - za dendrogram
-*`plotly` - za izrisovanje `hover` grafov v Shinyju
+* `ggdendro` - za risanje dendrogramov
+* `plotly` - za izrisovanje *hover* grafov v Shinyju
 
 ## Binder
 
